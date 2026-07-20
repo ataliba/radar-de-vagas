@@ -1,0 +1,734 @@
+[
+  {
+    "company": "Aarin",
+    "tenantName": "Aarin Techfin",
+    "slug": "aarin",
+    "jobsCount": 9
+  },
+  {
+    "company": "Adyen",
+    "tenantName": "Adyen",
+    "slug": "adyen",
+    "jobsCount": 0
+  },
+  {
+    "company": "Alelo",
+    "tenantName": "Alelo",
+    "slug": "alelo",
+    "jobsCount": 14
+  },
+  {
+    "company": "Algar Tech",
+    "tenantName": "Grupo Algar",
+    "slug": "algar",
+    "jobsCount": 4
+  },
+  {
+    "company": "Alice",
+    "tenantName": "Alice",
+    "slug": "alice",
+    "jobsCount": 15
+  },
+  {
+    "company": "Alicerce Educação",
+    "tenantName": "Alicerce",
+    "slug": "alicerce",
+    "jobsCount": 14
+  },
+  {
+    "company": "AMARO",
+    "tenantName": "AMARO",
+    "slug": "amaro",
+    "jobsCount": 3
+  },
+  {
+    "company": "AMCOM",
+    "tenantName": "AMcom",
+    "slug": "amcom",
+    "jobsCount": 30
+  },
+  {
+    "company": "Arquivei",
+    "tenantName": "Arquivei",
+    "slug": "arquivei",
+    "jobsCount": 0
+  },
+  {
+    "company": "Avenue",
+    "tenantName": "Avenue",
+    "slug": "avenue",
+    "jobsCount": 15
+  },
+  {
+    "company": "Avenue code",
+    "tenantName": "Avenue",
+    "slug": "avenue",
+    "jobsCount": 15
+  },
+  {
+    "company": "Avivatec",
+    "tenantName": "Avivatec",
+    "slug": "avivatec",
+    "jobsCount": 0
+  },
+  {
+    "company": "Banco Pine",
+    "tenantName": "Banco Pine",
+    "slug": "bancopine",
+    "jobsCount": 8
+  },
+  {
+    "company": "Bemobi",
+    "tenantName": "Bemobi",
+    "slug": "bemobi",
+    "jobsCount": 2
+  },
+  {
+    "company": "Bionexo",
+    "tenantName": "Bionexo",
+    "slug": "bionexo",
+    "jobsCount": 20
+  },
+  {
+    "company": "Bradesco",
+    "tenantName": "Bradesco",
+    "slug": "bradesco",
+    "jobsCount": 1
+  },
+  {
+    "company": "BRQ",
+    "tenantName": "BRQ",
+    "slug": "brq",
+    "jobsCount": 79
+  },
+  {
+    "company": "BRQ Digital Solutions",
+    "tenantName": "BRQ",
+    "slug": "brqdigitalsolutions",
+    "jobsCount": 0
+  },
+  {
+    "company": "Cadmus",
+    "tenantName": "Cadmus",
+    "slug": "cadmus",
+    "jobsCount": 0
+  },
+  {
+    "company": "CERC",
+    "tenantName": "CERC",
+    "slug": "cerc",
+    "jobsCount": 15
+  },
+  {
+    "company": "CERC Central de Recebíveis",
+    "tenantName": "CERC",
+    "slug": "cerc",
+    "jobsCount": 15
+  },
+  {
+    "company": "Cielo",
+    "tenantName": "Cielo",
+    "slug": "cielo",
+    "jobsCount": 24
+  },
+  {
+    "company": "ClickBus",
+    "tenantName": "ClickBus",
+    "slug": "clickbus",
+    "jobsCount": 0
+  },
+  {
+    "company": "Cobli",
+    "tenantName": "Cobli",
+    "slug": "cobli",
+    "jobsCount": 8
+  },
+  {
+    "company": "Cogna",
+    "tenantName": "Cogna Educação",
+    "slug": "cogna",
+    "jobsCount": 0
+  },
+  {
+    "company": "Conta Azul",
+    "tenantName": "Conta Azul",
+    "slug": "contaazul",
+    "jobsCount": 20
+  },
+  {
+    "company": "Contabilizei",
+    "tenantName": "Contabilizei",
+    "slug": "contabilizei",
+    "jobsCount": 65
+  },
+  {
+    "company": "Convenia",
+    "tenantName": "Convênia",
+    "slug": "convenia",
+    "jobsCount": 0
+  },
+  {
+    "company": "Cora",
+    "tenantName": "Cora",
+    "slug": "cora",
+    "jobsCount": 6
+  },
+  {
+    "company": "Creditas",
+    "tenantName": "Creditas",
+    "slug": "creditas",
+    "jobsCount": 0
+  },
+  {
+    "company": "CSP Tecnologia",
+    "tenantName": "CSP Tecnologia",
+    "slug": "csptecnologia",
+    "jobsCount": 0
+  },
+  {
+    "company": "CSU CardSystem",
+    "tenantName": "CSU",
+    "slug": "csu",
+    "jobsCount": 3
+  },
+  {
+    "company": "Cubos",
+    "tenantName": "Cubos Tecnologia",
+    "slug": "cubos",
+    "jobsCount": 15
+  },
+  {
+    "company": "Dafiti",
+    "tenantName": "Dafiti",
+    "slug": "dafiti",
+    "jobsCount": 0
+  },
+  {
+    "company": "DB1",
+    "tenantName": "DB1 Group",
+    "slug": "db1",
+    "jobsCount": 28
+  },
+  {
+    "company": "Deal",
+    "tenantName": "Deal Group",
+    "slug": "deal",
+    "jobsCount": 23
+  },
+  {
+    "company": "Digix",
+    "tenantName": "Digix",
+    "slug": "digix",
+    "jobsCount": 7
+  },
+  {
+    "company": "Digix Soluções em TI",
+    "tenantName": "Digix",
+    "slug": "digix",
+    "jobsCount": 7
+  },
+  {
+    "company": "Dock",
+    "tenantName": "Dock",
+    "slug": "dock",
+    "jobsCount": 13
+  },
+  {
+    "company": "dti digital",
+    "tenantName": "dti digital",
+    "slug": "dtidigital",
+    "jobsCount": 21
+  },
+  {
+    "company": "e-Core",
+    "tenantName": "e-Core",
+    "slug": "ecore",
+    "jobsCount": 16
+  },
+  {
+    "company": "Ebanx",
+    "tenantName": "EBANX",
+    "slug": "ebanx",
+    "jobsCount": 0
+  },
+  {
+    "company": "Edenred",
+    "tenantName": "Edenred",
+    "slug": "edenred",
+    "jobsCount": 0
+  },
+  {
+    "company": "Edenred Brasil",
+    "tenantName": "Edenred",
+    "slug": "edenred",
+    "jobsCount": 0
+  },
+  {
+    "company": "EloGroup",
+    "tenantName": "EloGroup",
+    "slug": "elogroup",
+    "jobsCount": 7
+  },
+  {
+    "company": "Enjoei",
+    "tenantName": "Enjoei",
+    "slug": "enjoei",
+    "jobsCount": 9
+  },
+  {
+    "company": "Exati Tecnologia",
+    "tenantName": "Exati",
+    "slug": "exati",
+    "jobsCount": 6
+  },
+  {
+    "company": "FALCONI",
+    "tenantName": "Falconi",
+    "slug": "falconi",
+    "jobsCount": 0
+  },
+  {
+    "company": "Fbiz",
+    "tenantName": "Fbiz",
+    "slug": "fbiz",
+    "jobsCount": 2
+  },
+  {
+    "company": "Fcamara",
+    "tenantName": "FCamara",
+    "slug": "fcamara",
+    "jobsCount": 0
+  },
+  {
+    "company": "Flash",
+    "tenantName": "Flash",
+    "slug": "flash",
+    "jobsCount": 0
+  },
+  {
+    "company": "Gauge Digital Consulting",
+    "tenantName": "Gauge",
+    "slug": "gauge",
+    "jobsCount": 0
+  },
+  {
+    "company": "Gerdau",
+    "tenantName": "Gerdau",
+    "slug": "gerdau",
+    "jobsCount": 0
+  },
+  {
+    "company": "Grupo Boticário",
+    "tenantName": "Grupo Boticário",
+    "slug": "grupoboticario",
+    "jobsCount": 2
+  },
+  {
+    "company": "Grupo FCamara",
+    "tenantName": "FCamara",
+    "slug": "fcamara",
+    "jobsCount": 0
+  },
+  {
+    "company": "Harpia Cloud",
+    "tenantName": "Harpia",
+    "slug": "harpia",
+    "jobsCount": 11
+  },
+  {
+    "company": "Icatu Seguros",
+    "tenantName": "Icatu Seguros",
+    "slug": "icatuseguros",
+    "jobsCount": 0
+  },
+  {
+    "company": "Idwall",
+    "tenantName": "idwall",
+    "slug": "idwall",
+    "jobsCount": 9
+  },
+  {
+    "company": "iFood",
+    "tenantName": "iFood",
+    "slug": "ifood",
+    "jobsCount": 0
+  },
+  {
+    "company": "InstaCarro.com",
+    "tenantName": "InstaCarro",
+    "slug": "instacarro",
+    "jobsCount": 18
+  },
+  {
+    "company": "Involves",
+    "tenantName": "Involves",
+    "slug": "involves",
+    "jobsCount": 7
+  },
+  {
+    "company": "Iteris Consultoria e Software",
+    "tenantName": "Iteris",
+    "slug": "iteris",
+    "jobsCount": 2
+  },
+  {
+    "company": "KPMG",
+    "tenantName": "KPMG",
+    "slug": "kpmg",
+    "jobsCount": 158
+  },
+  {
+    "company": "Labi Exames",
+    "tenantName": "Labi Exames",
+    "slug": "labiexames",
+    "jobsCount": 0
+  },
+  {
+    "company": "Lastlink",
+    "tenantName": "Lastlink",
+    "slug": "lastlink",
+    "jobsCount": 7
+  },
+  {
+    "company": "Lello",
+    "tenantName": "Lello",
+    "slug": "lello",
+    "jobsCount": 0
+  },
+  {
+    "company": "Linx",
+    "tenantName": "Linx",
+    "slug": "linx",
+    "jobsCount": 0
+  },
+  {
+    "company": "Listo",
+    "tenantName": "Listo",
+    "slug": "listo",
+    "jobsCount": 12
+  },
+  {
+    "company": "Livelo",
+    "tenantName": "Livelo",
+    "slug": "livelo",
+    "jobsCount": 13
+  },
+  {
+    "company": "Loft",
+    "tenantName": "Loft",
+    "slug": "loft",
+    "jobsCount": 0
+  },
+  {
+    "company": "Loggi",
+    "tenantName": "Loggi",
+    "slug": "loggi",
+    "jobsCount": 1
+  },
+  {
+    "company": "Magazine Luiza",
+    "tenantName": "Magazine Luiza",
+    "slug": "magazineluiza",
+    "jobsCount": 11
+  },
+  {
+    "company": "Matera",
+    "tenantName": "Matera",
+    "slug": "matera",
+    "jobsCount": 6
+  },
+  {
+    "company": "Mazzatech Systems & Outsourcing",
+    "tenantName": "mazzatech",
+    "slug": "mazzatech",
+    "jobsCount": 96
+  },
+  {
+    "company": "Meliuz",
+    "tenantName": "Méliuz",
+    "slug": "meliuz",
+    "jobsCount": 0
+  },
+  {
+    "company": "MJV Technology & Innovation",
+    "tenantName": "MJV INNOVATION",
+    "slug": "mjv",
+    "jobsCount": 46
+  },
+  {
+    "company": "Mundiale",
+    "tenantName": "Mundiale",
+    "slug": "mundiale",
+    "jobsCount": 6
+  },
+  {
+    "company": "Mutant",
+    "tenantName": "Mutant",
+    "slug": "mutant",
+    "jobsCount": 0
+  },
+  {
+    "company": "Neogrid",
+    "tenantName": "Neogrid",
+    "slug": "neogrid",
+    "jobsCount": 1
+  },
+  {
+    "company": "Neoway",
+    "tenantName": "Neoway",
+    "slug": "neoway",
+    "jobsCount": 1
+  },
+  {
+    "company": "Nexaas",
+    "tenantName": "Nexaas",
+    "slug": "nexaas",
+    "jobsCount": 2
+  },
+  {
+    "company": "Nibo",
+    "tenantName": "Nibo",
+    "slug": "nibo",
+    "jobsCount": 3
+  },
+  {
+    "company": "Nubank",
+    "tenantName": "Nubank",
+    "slug": "nubank",
+    "jobsCount": 0
+  },
+  {
+    "company": "Objective Solutions",
+    "tenantName": "Objective",
+    "slug": "objective",
+    "jobsCount": 14
+  },
+  {
+    "company": "Olist",
+    "tenantName": "Olist",
+    "slug": "olist",
+    "jobsCount": 12
+  },
+  {
+    "company": "Open Labs SA",
+    "tenantName": "Open Labs",
+    "slug": "openlabs",
+    "jobsCount": 1
+  },
+  {
+    "company": "Orbia",
+    "tenantName": "Orbia",
+    "slug": "orbia",
+    "jobsCount": 0
+  },
+  {
+    "company": "Orizon",
+    "tenantName": "Orizon ",
+    "slug": "orizon",
+    "jobsCount": 16
+  },
+  {
+    "company": "Paipe Tecnologia e Inovação",
+    "tenantName": "Paipe ",
+    "slug": "paipe",
+    "jobsCount": 3
+  },
+  {
+    "company": "Pitang",
+    "tenantName": "Pitang",
+    "slug": "pitang",
+    "jobsCount": 11
+  },
+  {
+    "company": "Platform Builders",
+    "tenantName": "Platform Builders",
+    "slug": "platformbuilders",
+    "jobsCount": 9
+  },
+  {
+    "company": "Pravaler",
+    "tenantName": "Pravaler",
+    "slug": "pravaler",
+    "jobsCount": 47
+  },
+  {
+    "company": "Radix",
+    "tenantName": "Radix",
+    "slug": "radix",
+    "jobsCount": 103
+  },
+  {
+    "company": "Raro Labs",
+    "tenantName": "Raro Labs",
+    "slug": "rarolabs",
+    "jobsCount": 3
+  },
+  {
+    "company": "Reclame aqui",
+    "tenantName": "Reclame AQUI",
+    "slug": "reclameaqui",
+    "jobsCount": 22
+  },
+  {
+    "company": "Remessa Online",
+    "tenantName": "Remessa Online",
+    "slug": "remessaonline",
+    "jobsCount": 6
+  },
+  {
+    "company": "RNP",
+    "tenantName": "Rede RNP",
+    "slug": "rnp",
+    "jobsCount": 0
+  },
+  {
+    "company": "Samsung Mobile",
+    "tenantName": "Samsung",
+    "slug": "samsung",
+    "jobsCount": 7
+  },
+  {
+    "company": "Samsung SDS",
+    "tenantName": "Samsung",
+    "slug": "samsung",
+    "jobsCount": 7
+  },
+  {
+    "company": "Semantix",
+    "tenantName": "Semantix",
+    "slug": "semantix",
+    "jobsCount": 66
+  },
+  {
+    "company": "Sidia Instituto de Ciência e Tecnologia",
+    "tenantName": "Sidia",
+    "slug": "sidia",
+    "jobsCount": 0
+  },
+  {
+    "company": "Sky.one",
+    "tenantName": "Skyone",
+    "slug": "skyone",
+    "jobsCount": 18
+  },
+  {
+    "company": "Solutis Tecnologias",
+    "tenantName": "Solutis",
+    "slug": "solutis",
+    "jobsCount": 14
+  },
+  {
+    "company": "Stone",
+    "tenantName": "Stone",
+    "slug": "stone",
+    "jobsCount": 0
+  },
+  {
+    "company": "Superlógica Tecnologias",
+    "tenantName": "Superlógica Tecnologias",
+    "slug": "superlogica",
+    "jobsCount": 14
+  },
+  {
+    "company": "Techlead IT Solutions",
+    "tenantName": "Techlead",
+    "slug": "techlead",
+    "jobsCount": 3
+  },
+  {
+    "company": "Tegra",
+    "tenantName": "Tegra",
+    "slug": "tegra",
+    "jobsCount": 0
+  },
+  {
+    "company": "tembici.",
+    "tenantName": "Tembici",
+    "slug": "tembici",
+    "jobsCount": 0
+  },
+  {
+    "company": "Tempest Security Intelligence",
+    "tenantName": "Tempest",
+    "slug": "tempest",
+    "jobsCount": 7
+  },
+  {
+    "company": "Tinnova",
+    "tenantName": "Tinnova",
+    "slug": "tinnova",
+    "jobsCount": 6
+  },
+  {
+    "company": "TOTVS",
+    "tenantName": "TOTVS",
+    "slug": "totvs",
+    "jobsCount": 0
+  },
+  {
+    "company": "TQI",
+    "tenantName": "TQI",
+    "slug": "tqi",
+    "jobsCount": 16
+  },
+  {
+    "company": "Tray Plataforma de E-commerce",
+    "tenantName": "Tray",
+    "slug": "tray",
+    "jobsCount": 0
+  },
+  {
+    "company": "Trinca",
+    "tenantName": "Trinca",
+    "slug": "trinca",
+    "jobsCount": 3
+  },
+  {
+    "company": "Turbi",
+    "tenantName": "Turbi",
+    "slug": "turbi",
+    "jobsCount": 26
+  },
+  {
+    "company": "Unico IDTech",
+    "tenantName": "Unico ",
+    "slug": "unico",
+    "jobsCount": 8
+  },
+  {
+    "company": "Venturus",
+    "tenantName": "Venturus",
+    "slug": "venturus",
+    "jobsCount": 25
+  },
+  {
+    "company": "vhsys - Sistema de Gestão Empresarial",
+    "tenantName": "vhsys",
+    "slug": "vhsys",
+    "jobsCount": 10
+  },
+  {
+    "company": "Warren",
+    "tenantName": "Warren",
+    "slug": "warren",
+    "jobsCount": 4
+  },
+  {
+    "company": "will bank",
+    "tenantName": "will bank",
+    "slug": "willbank",
+    "jobsCount": 0
+  },
+  {
+    "company": "Winnin",
+    "tenantName": "Winnin",
+    "slug": "winnin",
+    "jobsCount": 6
+  },
+  {
+    "company": "Zup Innovation",
+    "tenantName": "Zup",
+    "slug": "zup",
+    "jobsCount": 0
+  }
+]
