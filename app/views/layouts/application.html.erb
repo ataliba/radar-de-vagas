@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Radar de vagas" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Radar de vagas">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <div class="app">
+      <div class="topline">
+        <%= link_to "vagas", vagas_path, class: current_page?(vagas_path) ? "active" : nil %>
+        <span><%= link_to "presença por empresa", presencas_path, class: current_page?(presencas_path) ? "active" : nil %></span>
+        <span><%= link_to "InHire novas", empresas_novas_path, class: current_page?(empresas_novas_path) ? "active" : nil %></span>
+        <span><%= button_to "reimportar dados", import_path, method: :post %></span>
+      </div>
+
+      <% if notice.present? %>
+        <div class="banner ok"><p><strong>ok</strong> — <%= notice %></p></div>
+      <% end %>
+      <% if alert.present? %>
+        <div class="banner danger"><p><strong>erro</strong> — <%= alert %></p></div>
+      <% end %>
+
+      <%= yield %>
+    </div>
+  </body>
+</html>

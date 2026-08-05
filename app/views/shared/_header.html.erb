@@ -1,0 +1,17 @@
+<div class="header">
+  <div class="brand">
+    <div class="radar-scope"></div>
+    <div>
+      <h1>radar de vagas</h1>
+      <p><%= subtitle %></p>
+    </div>
+  </div>
+  <% if defined?(stats) && stats.present? %>
+    <div class="stats">
+      <div class="stat"><b><%= stats[:total] %></b><span>vagas</span></div>
+      <div class="stat"><b><%= stats[:na_lista] %></b><span>na lista</span></div>
+      <div class="stat"><b><%= stats[:empresas] %></b><span>empresas</span></div>
+      <div class="stat"><b><%= stats[:enviadas] %></b><span>enviadas</span></div>
+    </div>
+  <% end %>
+</div>

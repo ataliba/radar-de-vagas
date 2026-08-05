@@ -1,0 +1,78 @@
+<% content_for :title, "radar de vagas" %>
+
+<%= render "shared/header", subtitle: "#{@stats[:total]} vagas monitoradas · #{@stats[:empresas]} empresas", stats: @stats %>
+
+<%= form_with url: vagas_path, method: :get, class: "controls" do %>
+  <%= text_field_tag :q, params[:q], placeholder: "Buscar por empresa, vaga ou categoria" %>
+
+  <%= select_tag :cargo_categoria, options_for_select([["Todas as categorias", ""]] + @cargo_categorias, params[:cargo_categoria]) %>
+  <%= select_tag :plataforma, options_for_select([["Todas as plataformas", ""]] + @plataformas, params[:plataforma]) %>
+  <%= select_tag :sort, options_for_select([["Mais recentes", "detectado_em"], ["Publicado", "publicado"]], @sort) %>
+  <%= select_tag :na_lista, options_for_select([["Todas", ""], ["Na lista: Sim", "Sim"], ["Na lista: Não", "Não"]], params[:na_lista]) %>
+  <%= select_tag :status, options_for_select([["Todas", ""], ["Detectadas", "detectado"], ["Enviadas", "enviada"]], params[:status]) %>
+
+  <label class="chk"><%= check_box_tag :alerta, "1", params[:alerta] == "1" %> só com alerta</label>
+
+  <%= submit_tag "Filtrar", class: "submit-btn" %>
+  <%= link_to "Limpar filtros", vagas_path, class: "clear-btn" %>
+<% end %>
+
+<%= form_with url: enviar_vagas_path, method: :post, data: { controller: "bulk-select" } do %>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th><%= check_box_tag "all", "1", false, data: { "bulk-select-target": "all", action: "bulk-select#toggleAll" } %></th>
+          <th>Empresa</th>
+          <th>Vaga</th>
+          <th>Plataforma</th>
+          <th>Local</th>
+          <th>Na lista?</th>
+          <th>Detectado em</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @vagas.each do |vaga| %>
+          <tr>
+            <td>
+              <% if vaga.status == "detectado" %>
+                <%= check_box_tag "vaga_ids[]", vaga.id, false, id: "vaga_#{vaga.id}", data: { "bulk-select-target": "item", action: "bulk-select#refresh" } %>
+              <% end %>
+            </td>
+            <td class="empresa"><%= vaga.empresa %></td>
+            <td>
+              <div class="vaga"><%= link_to vaga.titulo_vaga, vaga.link, target: "_blank", rel: "noopener" %></div>
+              <div class="meta"><span class="tag"><%= vaga.cargo_categoria %></span></div>
+            </td>
+            <td class="mono <%= vaga.plataforma == 'Gupy' ? 'plataforma-gupy' : 'plataforma-inhire' %>"><%= vaga.plataforma %></td>
+            <td><%= vaga.local %></td>
+            <td><%= vaga.na_lista == "Sim" ? content_tag(:span, "Sim", class: "badge-sim") : content_tag(:span, "Não", class: "badge-nao") %></td>
+            <td class="mono"><%= vaga.detectado_em&.strftime("%d/%m/%Y") %></td>
+            <td>
+              <% if vaga.status == "enviada" %>
+                <span class="badge-sim" title="<%= vaga.jobsync_job_id %>">enviada <%= vaga.enviado_em&.strftime("%d/%m") %></span>
+              <% else %>
+                <span class="mono">detectada</span>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+
+        <% if @vagas.empty? %>
+          <tr><td colspan="8" class="empty">Nenhuma vaga encontrada com esses filtros.</td></tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="bulk-actions">
+    <button type="submit" class="btn" data-bulk-select-target="submit" disabled>
+      Enviar <span data-bulk-select-target="count">0</span> vaga(s) pro JobSync
+    </button>
+  </div>
+<% end %>
+
+<div class="pagy-nav">
+  <%== pagy_nav(@pagy) %>
+</div>

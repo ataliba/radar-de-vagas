@@ -1,0 +1,2 @@
+class Presenca < ApplicationRecord
+end

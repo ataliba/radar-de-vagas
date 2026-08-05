@@ -1,0 +1,42 @@
+<% content_for :title, "presença por empresa · radar de vagas" %>
+
+<%= render "shared/header", subtitle: "Empresas da sua lista com página na Gupy e/ou InHire" %>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Empresa</th>
+        <th>Gupy</th>
+        <th>InHire</th>
+        <th>Vagas InHire</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @presencas.each do |p| %>
+        <tr>
+          <td class="empresa"><%= p.empresa %></td>
+          <td>
+            <% if p.gupy == "Sim" %>
+              <%= link_to "Sim", p.gupy_url, target: "_blank", rel: "noopener", class: "badge-sim" %>
+            <% else %>
+              <span class="mono">—</span>
+            <% end %>
+          </td>
+          <td>
+            <% if p.inhire == "Sim" %>
+              <%= link_to "Sim", p.inhire_url, target: "_blank", rel: "noopener", class: "badge-sim" %>
+            <% else %>
+              <span class="mono">—</span>
+            <% end %>
+          </td>
+          <td class="mono"><%= p.inhire_vagas_total %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="pagy-nav">
+  <%== pagy_nav(@pagy) %>
+</div>

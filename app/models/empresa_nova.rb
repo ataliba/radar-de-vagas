@@ -1,0 +1,2 @@
+class EmpresaNova < ApplicationRecord
+end

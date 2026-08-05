@@ -1,0 +1,28 @@
+<% content_for :title, "InHire novas · radar de vagas" %>
+
+<%= render "shared/header", subtitle: "Empresas InHire fora da sua lista, ordenadas por volume" %>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Empresa</th>
+        <th>Vagas</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @empresas_novas.each do |e| %>
+        <tr>
+          <td class="empresa"><%= e.empresa %></td>
+          <td class="mono"><%= e.vagas_total %></td>
+          <td><%= link_to "Carreiras", e.url, target: "_blank", rel: "noopener" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="pagy-nav">
+  <%== pagy_nav(@pagy) %>
+</div>

@@ -1,0 +1,19 @@
+# syntax=docker/dockerfile:1
+# Dockerfile de desenvolvimento — usado pelo docker-compose.yml (não é o de produção/Kamal).
+ARG RUBY_VERSION=3.4.10
+FROM docker.io/library/ruby:${RUBY_VERSION}-slim
+
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y build-essential libpq-dev postgresql-client libyaml-dev pkg-config curl git && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+
+WORKDIR /app
+
+COPY Gemfile Gemfile.lock ./
+RUN bundle install
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["bin/rails", "server", "-b", "0.0.0.0"]
