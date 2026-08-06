@@ -20,7 +20,7 @@ services:
   # compartilhado com o web) e avisa o Rails via POST /import quando termina.
   scraper:
     build:
-      context: ../busca-vagas-gupy-inhire
+      context: ./busca-vagas-gupy-inhire
       dockerfile: busca_vagas/Dockerfile
     volumes:
       - vagas_data:/data
@@ -30,11 +30,11 @@ services:
 
   web:
     build:
-      context: .
+      context: ./rails
       dockerfile: Dockerfile.dev
     command: bin/rails server -b 0.0.0.0
     volumes:
-      - .:/app:z
+      - ./rails:/app:z
       - bundle_cache:/usr/local/bundle
       - vagas_data:/data:ro
     ports:
@@ -54,13 +54,13 @@ services:
   # tailwind também encerra sozinho após o primeiro build.
   css:
     build:
-      context: .
+      context: ./rails
       dockerfile: Dockerfile.dev
     command: bin/rails tailwindcss:watch
     tty: true
     stdin_open: true
     volumes:
-      - .:/app:z
+      - ./rails:/app:z
       - bundle_cache:/usr/local/bundle
 
 volumes:

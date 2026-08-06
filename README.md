@@ -1,24 +1,26 @@
-# README
+# Radar de vagas
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Dois projetos, um repo, orquestrados pelo `docker-compose.yml` na raiz:
 
-Things you may want to cover:
+| Pasta | O que é |
+|---|---|
+| [`busca-vagas-gupy-inhire/`](busca-vagas-gupy-inhire/) | Pipeline que descobre vagas remotas na Gupy e InHire. Roda sozinho em container, escreve os JSON num volume compartilhado. Trazido pra cá via `git subtree` — histórico preservado, [projeto original](https://github.com/vonrondow/busca-vagas-gupy-inhire) intacto. |
+| [`rails/`](rails/) | Dashboard Rails que lê o resultado do pipeline, mostra vagas/presença/empresas e integra com o [JobSync](https://github.com/Gsync/jobsync). |
 
-* Ruby version
+## Rodar tudo
 
-* System dependencies
+```
+docker compose up
+```
 
-* Configuration
+Sobe banco (Postgres), o scraper (roda no boot e depois no cron 11h30/18h) e o dashboard em
+`http://localhost:3000`. Detalhes de cada parte nos READMEs das respectivas pastas.
 
-* Database creation
+## Atualizar o scraper a partir do projeto original
 
-* Database initialization
+Como o `busca-vagas-gupy-inhire/` entrou via `git subtree`, dá pra puxar mudanças novas do
+repo original sem perder histórico:
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+git subtree pull --prefix=busca-vagas-gupy-inhire https://github.com/vonrondow/busca-vagas-gupy-inhire.git main
+```
