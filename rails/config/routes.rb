@@ -17,5 +17,6 @@ Rails.application.routes.draw do
   end
   resources :presencas, only: [ :index ]
   resources :empresas_novas, only: [ :index ]
+  resources :empresas_alvos, only: [ :index, :create, :destroy ]
   resource :import, only: [ :create ]
 end

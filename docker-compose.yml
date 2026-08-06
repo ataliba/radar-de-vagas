@@ -26,6 +26,7 @@ services:
       - vagas_data:/data
     environment:
       RAILS_IMPORT_URL: http://web:3000/import
+      RAILS_EMPRESAS_URL: http://web:3000/empresas_alvos.json
     restart: unless-stopped
 
   web:

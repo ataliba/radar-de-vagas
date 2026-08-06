@@ -1,0 +1,40 @@
+<% content_for :title, "Empresas cadastradas · radar de vagas" %>
+
+<%= render "shared/header", subtitle: "#{EmpresaAlvo.count} empresas na lista-alvo do scraper" %>
+
+<%= form_with url: empresas_alvos_path, method: :post, class: "controls" do %>
+  <%= text_field_tag :empresa, nil, placeholder: "Nome da empresa (como aparece no ATS)" %>
+  <%= submit_tag "Adicionar", class: "submit-btn" %>
+<% end %>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Empresa</th>
+        <th>Cadastrada em</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @empresas_alvos.each do |e| %>
+        <tr>
+          <td class="empresa"><%= e.empresa %></td>
+          <td class="mono"><%= e.created_at.strftime("%d/%m/%Y") %></td>
+          <td>
+            <%= button_to "Remover", empresas_alvo_path(e), method: :delete, class: "clear-btn",
+                  form: { data: { turbo_confirm: "Remover \"#{e.empresa}\" da lista-alvo?" } } %>
+          </td>
+        </tr>
+      <% end %>
+
+      <% if @empresas_alvos.empty? %>
+        <tr><td colspan="3" class="empty">Nenhuma empresa cadastrada ainda.</td></tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div class="pagy-nav">
+  <%== pagy_nav(@pagy) %>
+</div>
