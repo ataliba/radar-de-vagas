@@ -1,0 +1,2 @@
+class EmpresaAlvo < ApplicationRecord
+end
