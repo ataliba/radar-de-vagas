@@ -13,7 +13,7 @@ Dois projetos, um repo, orquestrados pelo `docker-compose.yml` na raiz:
 docker compose up
 ```
 
-Sobe banco (Postgres), o scraper (roda no boot e depois no cron 11h30/18h) e o dashboard em
+Sobe banco (Postgres), o scraper (roda no boot e depois no cron 8h/12h/18h) e o dashboard em
 `http://localhost:3000`. Detalhes de cada parte nos READMEs das respectivas pastas.
 
 ## Atualizar o scraper a partir do projeto original

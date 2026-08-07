@@ -10,6 +10,6 @@ COPY empresas.xlsx ./
 COPY busca_vagas/*.js ./
 COPY busca_vagas/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh \
-  && printf '30 11,18 * * * /entrypoint.sh once >> /proc/1/fd/1 2>&1\n' > /etc/crontabs/root
+  && printf '0 8,12,18 * * * /entrypoint.sh once >> /proc/1/fd/1 2>&1\n' > /etc/crontabs/root
 
 ENTRYPOINT ["/entrypoint.sh"]
