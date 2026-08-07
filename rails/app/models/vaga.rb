@@ -1,12 +1,9 @@
 class Vaga < ApplicationRecord
   CARGO_CATEGORIAS = [
-    "Analista de Dados / Data Analyst",
-    "Analista de Insights",
-    "Analista de Inteligência de Mercado",
-    "BI / Business Intelligence",
-    "Business Analyst / Analista de Negócios",
-    "Growth Analyst / Analista de Growth",
-    "Revenue Operations / RevOps"
+    "DevOps Engineer / SRE",
+    "Cloud Engineer / Cloud Security / Platform Engineer",
+    "Infraestrutura / Sysadmin",
+    "Kubernetes Engineer"
   ].freeze
 
   PLATAFORMAS = %w[Gupy InHire].freeze

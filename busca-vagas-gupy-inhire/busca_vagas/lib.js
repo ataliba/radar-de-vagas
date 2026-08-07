@@ -27,16 +27,15 @@ function tokens(s) {
 }
 
 // Role matching against a job title. Returns canonical role label or null.
+// Escopo DevOps/Cloud/Infra (perfil do candidato) — ordem importa: mais
+// específico primeiro (Kubernetes antes de DevOps genérico, etc).
 function matchRole(title) {
   const t = ' ' + String(title).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ') + ' ';
   const has = (re) => re.test(t);
-  if (has(/ revenue operations /) || has(/ revops /) || has(/ revenue ops /)) return 'Revenue Operations / RevOps';
-  if (has(/ growth /)) return 'Growth Analyst / Analista de Growth';
-  if (has(/ analista de insights /) || has(/ insights analyst /) || (has(/ insights /) && has(/ analista /))) return 'Analista de Insights';
-  if (has(/ inteligencia de mercado /) || has(/ market intelligence /) || (has(/ intelligence /) && has(/ market /))) return 'Analista de Inteligência de Mercado';
-  if (has(/ analista de negocios /) || has(/ business analyst /)) return 'Business Analyst / Analista de Negócios';
-  if (has(/ inteligencia de negocios /) || has(/ analista de bi /) || has(/ bi analyst /) || has(/ business intelligence /) || has(/ analista de business intelligence /) || has(/ analista bi /)) return 'BI / Business Intelligence';
-  if (has(/ analista de dados /) || has(/ data analyst /) || has(/ analista de dados e /)) return 'Analista de Dados / Data Analyst';
+  if (has(/ kubernetes /) || has(/ k8s /)) return 'Kubernetes Engineer';
+  if (has(/ devops /) || has(/ dev ops /) || has(/ sre /) || has(/ site reliability /)) return 'DevOps Engineer / SRE';
+  if (has(/ cloud engineer /) || has(/ cloud security /) || has(/ platform engineer /) || (has(/ cloud /) && has(/ engineer /))) return 'Cloud Engineer / Cloud Security / Platform Engineer';
+  if (has(/ infraestrutura /) || has(/ sysadmin /) || has(/ system administrator /) || has(/ infrastructure engineer /) || has(/ administrador de redes /) || has(/ administrador de sistemas /)) return 'Infraestrutura / Sysadmin';
   return null;
 }
 

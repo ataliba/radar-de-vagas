@@ -1,6 +1,6 @@
 # Busca de vagas — Gupy + InHire
 
-Pipeline que descobre **vagas 100% remotas** em cargos de dados/BI/negócios/growth nos dois
+Pipeline que descobre **vagas 100% remotas** em cargos de DevOps/SRE/Cloud/Infra nos dois
 maiores ATS do mercado brasileiro e entrega uma planilha Excel pronta para candidatura.
 
 A sacada: as duas plataformas expõem **APIs JSON públicas**. A Gupy tem busca global; a InHire

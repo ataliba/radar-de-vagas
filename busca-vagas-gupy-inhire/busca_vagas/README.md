@@ -1,6 +1,6 @@
 # Busca de vagas — Gupy + InHire
 
-Pipeline que encontra **vagas remotas** nos cargos de dados/BI/negócios/growth nas duas
+Pipeline que encontra **vagas remotas** nos cargos de DevOps/SRE/Cloud/Infra nas duas
 plataformas e gera uma planilha Excel pronta para candidatura. A busca é **global** (todas as
 empresas com vaga aberta no cargo-alvo); a sua lista de empresas serve para **marcar** o que é
 dela (coluna "Na sua lista?") e montar a aba de Presença — não corta mais as de fora.
@@ -98,8 +98,9 @@ educação, tech, grupo…) ou compact-substring forte. Sem isso dá falso posit
 
 ## Ajustar filtros (o que mexer)
 
-- **Cargos aceitos:** função `matchRole()` em `lib.js`. Adicione padrões para incluir novos
-  títulos (ex.: Product Analyst, Analytics Engineer, Performance, Pricing, CRM).
+- **Cargos aceitos:** função `matchRole()` em `lib.js` (escopo DevOps/SRE, Cloud/Platform
+  Engineer, Infraestrutura/Sysadmin, Kubernetes Engineer — perfil do candidato, ver CV).
+  Adicione padrões pra incluir novos títulos (ex.: FinOps, Security Engineer, Network Engineer).
 - **Termos de busca da Gupy:** array `QUERIES` no topo de `gupy.js`.
 - **Só remoto vs incluir híbrido:** hoje filtra `workplaceType` remoto em `gupy.js`,
   `validate_inhire.js` e `merge.js`. Para incluir híbrido, afrouxe esses filtros (não recomendado:
@@ -109,7 +110,7 @@ educação, tech, grupo…) ou compact-substring forte. Sem isso dá falso posit
   `na_lista` (Sim/Não). O `matchCompany` só é usado para montar a aba **Presença**. Para voltar
   ao escopo "só minha lista", filtre `na_lista === 'Sim'` (ou reative o corte por `matchCompany`).
 - **Excluir estágio/júnior/trainee:** hoje `matchRole()` casa pelo cargo e pode pegar um estágio
-  ("Estágio em Growth"). Se quiser cortar, filtre o título por `estágio|júnior|jr|trainee` antes de
+  ("Estágio em DevOps"). Se quiser cortar, filtre o título por `estágio|júnior|jr|trainee` antes de
   gravar (em `gupy.js` e `validate_inhire.js`).
 
 ---

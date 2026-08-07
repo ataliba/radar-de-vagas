@@ -3,10 +3,10 @@ const path = require('path');
 const { DIR, loadCompanies, compact, matchRole, isRemote, sleep } = require('./lib.js');
 
 const QUERIES = [
-  'Analista de Dados', 'Data Analyst', 'Analista de BI', 'Business Intelligence',
-  'Business Analyst', 'Analista de Negócios', 'Inteligência de Negócios',
-  'Growth', 'Revenue Operations', 'RevOps', 'Analista de Insights',
-  'Inteligência de Mercado', 'Market Intelligence'
+  'DevOps', 'SRE', 'Site Reliability Engineer',
+  'Cloud Engineer', 'Cloud Security', 'Platform Engineer',
+  'Kubernetes',
+  'Infraestrutura', 'Analista de Infraestrutura', 'Sysadmin', 'Administrador de Sistemas'
 ];
 
 const API = 'https://employability-portal.gupy.io/api/v1/jobs';
