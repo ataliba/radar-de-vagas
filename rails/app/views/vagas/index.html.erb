@@ -9,7 +9,7 @@
   <%= select_tag :plataforma, options_for_select([["Todas as plataformas", ""]] + @plataformas, params[:plataforma]) %>
   <%= select_tag :sort, options_for_select([["Mais recentes", "detectado_em"], ["Publicado", "publicado"]], @sort) %>
   <%= select_tag :na_lista, options_for_select([["Todas", ""], ["Na lista: Sim", "Sim"], ["Na lista: Não", "Não"]], params[:na_lista]) %>
-  <%= select_tag :status, options_for_select([["Todas", ""], ["Detectadas", "detectado"], ["Enviadas", "enviada"]], params[:status]) %>
+  <%= select_tag :status, options_for_select([["Todas", ""], ["Detectadas", "detectado"], ["Enviadas", "enviada"], ["Não aplicável", "nao_aplicavel"]], params[:status]) %>
 
   <label class="chk"><%= check_box_tag :alerta, "1", params[:alerta] == "1" %> só com alerta</label>
 
@@ -52,6 +52,8 @@
             <td>
               <% if vaga.status == "enviada" %>
                 <span class="badge-sim" title="<%= vaga.jobsync_job_id %>">enviada <%= vaga.enviado_em&.strftime("%d/%m") %></span>
+              <% elsif vaga.status == "nao_aplicavel" %>
+                <span class="badge-nao">não aplicável</span>
               <% else %>
                 <span class="mono">detectada</span>
               <% end %>
@@ -69,6 +71,9 @@
   <div class="bulk-actions">
     <button type="submit" class="btn" data-bulk-select-target="submit" disabled>
       Enviar <span data-bulk-select-target="count">0</span> vaga(s) pro JobSync
+    </button>
+    <button type="submit" formaction="<%= marcar_nao_aplicavel_vagas_path %>" class="clear-btn" data-bulk-select-target="submit" disabled>
+      Marcar como não aplicável
     </button>
   </div>
 <% end %>

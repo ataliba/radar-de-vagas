@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :vagas, only: [ :index ] do
     collection do
       post :enviar
+      post :marcar_nao_aplicavel
     end
   end
   resources :presencas, only: [ :index ]

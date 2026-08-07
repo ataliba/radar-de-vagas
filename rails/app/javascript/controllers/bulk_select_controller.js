@@ -15,7 +15,7 @@ export default class extends Controller {
 
   refresh() {
     const checked = this.itemTargets.filter((checkbox) => checkbox.checked).length
-    if (this.hasSubmitTarget) this.submitTarget.disabled = checked === 0
+    this.submitTargets.forEach((button) => { button.disabled = checked === 0 })
     if (this.hasCountTarget) this.countTarget.textContent = checked
     if (this.hasAllTarget) this.allTarget.checked = checked > 0 && checked === this.itemTargets.length
   }

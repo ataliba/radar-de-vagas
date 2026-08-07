@@ -11,7 +11,7 @@ class Vaga < ApplicationRecord
 
   PLATAFORMAS = %w[Gupy InHire].freeze
 
-  STATUSES = %w[detectado enviada].freeze
+  STATUSES = %w[detectado enviada nao_aplicavel].freeze
 
   validates :status, inclusion: { in: STATUSES }
 

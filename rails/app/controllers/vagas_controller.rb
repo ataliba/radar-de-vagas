@@ -45,4 +45,15 @@ class VagasController < ApplicationController
   rescue JobSyncClient::Erro => e
     redirect_to vagas_path, alert: "JobSync não configurado: #{e.message}"
   end
+
+  def marcar_nao_aplicavel
+    vagas = Vaga.where(id: Array(params[:vaga_ids]), status: "detectado")
+    total = vagas.update_all(status: "nao_aplicavel")
+
+    if total.zero?
+      redirect_to vagas_path, alert: "Nenhuma vaga selecionada."
+    else
+      redirect_to vagas_path, notice: "#{total} vaga(s) marcada(s) como não aplicável."
+    end
+  end
 end
