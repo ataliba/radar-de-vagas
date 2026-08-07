@@ -4,7 +4,7 @@ const { DIR, loadCompanies, compact, matchRole, isRemote, sleep } = require('./l
 
 const QUERIES = [
   'DevOps', 'SRE', 'Site Reliability Engineer',
-  'Cloud Engineer', 'Cloud Security', 'Platform Engineer',
+  'Cloud', 'Cloud Engineer', 'Cloud Security', 'Analista Cloud', 'Nuvem', 'Platform Engineer',
   'Kubernetes',
   'Infraestrutura', 'Analista de Infraestrutura', 'Sysadmin', 'Administrador de Sistemas'
 ];
