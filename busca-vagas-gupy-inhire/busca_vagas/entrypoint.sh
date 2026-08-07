@@ -14,7 +14,7 @@ executar() {
   echo "==== pipeline $(date) ===="
   ( cd /data && node rodar_tudo.js )
   echo "==== avisando o Rails pra importar ===="
-  curl -fsS -X POST "${RAILS_IMPORT_URL:-http://web:3000/import}" \
+  curl -fsS -u "${BASIC_AUTH_USER:-}:${BASIC_AUTH_PASSWORD:-}" -X POST "${RAILS_IMPORT_URL:-http://web:3000/import}" \
     && echo "ok" \
     || echo "aviso: POST $RAILS_IMPORT_URL falhou (Rails fora do ar?)"
 }

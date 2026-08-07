@@ -1,0 +1,4 @@
+# Consumido pelo docker-compose.yml (interpolação de ${VAR}) — segredos
+# reais (token JobSync, usuário/senha do basic auth). Nunca commitar.
+/.env*
+!/.env.example

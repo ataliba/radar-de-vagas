@@ -12,9 +12,16 @@ const path = require("path");
 
 const DIR = __dirname;
 const RAILS_EMPRESAS_URL = process.env.RAILS_EMPRESAS_URL || "http://web:3000/empresas_alvos.json";
+const BASIC_AUTH_USER = process.env.BASIC_AUTH_USER;
+const BASIC_AUTH_PASSWORD = process.env.BASIC_AUTH_PASSWORD;
 
 async function buscarDoRails() {
-  const resposta = await fetch(RAILS_EMPRESAS_URL, { signal: AbortSignal.timeout(10_000) });
+  const headers = {};
+  if (BASIC_AUTH_USER && BASIC_AUTH_PASSWORD) {
+    headers.Authorization = `Basic ${Buffer.from(`${BASIC_AUTH_USER}:${BASIC_AUTH_PASSWORD}`).toString("base64")}`;
+  }
+
+  const resposta = await fetch(RAILS_EMPRESAS_URL, { headers, signal: AbortSignal.timeout(10_000) });
   if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
 
   const nomes = await resposta.json();
