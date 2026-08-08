@@ -51,11 +51,11 @@
             <td class="mono"><%= vaga.detectado_em&.strftime("%d/%m/%Y") %></td>
             <td>
               <% if vaga.status == "enviada" %>
-                <span class="badge-sim" title="<%= vaga.jobsync_job_id %>">enviada <%= vaga.enviado_em&.strftime("%d/%m") %></span>
+                <span class="badge-status enviada" title="<%= vaga.jobsync_job_id %>">enviada <%= vaga.enviado_em&.strftime("%d/%m") %></span>
               <% elsif vaga.status == "nao_aplicavel" %>
-                <span class="badge-nao">não aplicável</span>
+                <span class="badge-status nao-aplicavel">não aplicável</span>
               <% else %>
-                <span class="mono">detectada</span>
+                <span class="badge-status detectado">detectada</span>
               <% end %>
             </td>
           </tr>
