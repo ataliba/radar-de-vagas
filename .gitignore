@@ -2,3 +2,6 @@
 # reais (token JobSync, usuário/senha do basic auth). Nunca commitar.
 /.env*
 !/.env.example
+
+# Tem IP interno da LAN de deploy (registry local). Local-only.
+/build.sh
