@@ -1,3 +1,21 @@
+# Saída/cache do pipeline — regenerável a cada rodada, não é código nem
+# entrada. companies.json e empresas.xlsx (entrada, usada pra popular o
+# banco) ficam de fora desta lista de propósito.
+/vagas_gupy_inhire.xlsx
+busca_vagas/gupy_presence.json
+busca_vagas/gupy_presence_full.json
+busca_vagas/gupy_results.json
+busca_vagas/inhire_all_tenants.json
+busca_vagas/inhire_all_vagas.json
+busca_vagas/inhire_new_companies.json
+busca_vagas/inhire_results.json
+busca_vagas/inhire_tenants.json
+busca_vagas/presence_combined.json
+busca_vagas/seen.json
+busca_vagas/solides_presence.json
+busca_vagas/solides_results.json
+busca_vagas/vagas_final.json
+
 # Artefatos brutos do harvest (grandes, regeneráveis pelo harvest_inhire.js)
 busca_vagas/wb_app.txt
 busca_vagas/us_app_paged.json
