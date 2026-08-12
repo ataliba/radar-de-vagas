@@ -33,3 +33,10 @@ repo original sem perder histórico:
 ```
 git subtree pull --prefix=busca-vagas-gupy-inhire https://github.com/vonrondow/busca-vagas-gupy-inhire.git main
 ```
+
+## Créditos
+
+O pipeline de busca (Gupy + InHire, depois estendido com Sólides) nasceu no
+[vonrondow/busca-vagas-gupy-inhire](https://github.com/vonrondow/busca-vagas-gupy-inhire).
+Trazido pra este repo via `git subtree`, com o histórico original preservado. O dashboard
+Rails, a integração com JobSync e o scraper de Sólides foram construídos em cima disso.
