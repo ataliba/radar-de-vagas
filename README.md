@@ -1,5 +1,8 @@
 # Radar de vagas
 
+<img width="1024" height="559" alt="image" src="https://github.com/user-attachments/assets/0377e9d6-04c3-4f86-94f9-40ddd31d643e" />
+
+
 Radar de vagas remotas DevOps/SRE/Cloud/Infra em três plataformas (Gupy, InHire e Sólides),
 com dashboard próprio pra acompanhar o que é novo, o que já foi enviado e onde as empresas
 da sua lista têm página de carreiras.
