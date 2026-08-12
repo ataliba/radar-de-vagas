@@ -1,0 +1,74 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: busca_de_vagas_development
+      POSTGRES_USER: busca_de_vagas
+      POSTGRES_PASSWORD: busca_de_vagas
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U busca_de_vagas"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Pipeline de scraping (Gupy/InHire) — roda sozinho no container, sem
+  # depender da máquina Windows. Escreve os JSON em /data (volume
+  # compartilhado com o web) e avisa o Rails via POST /import quando termina.
+  scraper:
+    build:
+      context: ./busca-vagas-gupy-inhire
+      dockerfile: busca_vagas/Dockerfile
+    volumes:
+      - vagas_data:/data
+    environment:
+      RAILS_IMPORT_URL: http://web:3000/import
+      RAILS_EMPRESAS_URL: http://web:3000/empresas_alvos.json
+      BASIC_AUTH_USER: ${BASIC_AUTH_USER:-}
+      BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD:-}
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ./rails
+      dockerfile: Dockerfile.dev
+    command: bin/rails server -b 0.0.0.0
+    volumes:
+      - ./rails:/app:z
+      - bundle_cache:/usr/local/bundle
+      - vagas_data:/data:ro
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: development
+      DATABASE_URL: postgres://busca_de_vagas:busca_de_vagas@db:5432/busca_de_vagas_development
+      VAGAS_SOURCE_DIR: /data
+      JOBSYNC_URL: ${JOBSYNC_URL:-http://localhost:3737}
+      JOBSYNC_TOKEN: ${JOBSYNC_TOKEN:-}
+      BASIC_AUTH_USER: ${BASIC_AUTH_USER:-}
+      BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD:-}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Watcher do Tailwind CSS em serviço à parte — via foreman/bin/dev o watcher
+  # morria logo (foreman fecha o stdin dos filhos), e sem tty o binário do
+  # tailwind também encerra sozinho após o primeiro build.
+  css:
+    build:
+      context: ./rails
+      dockerfile: Dockerfile.dev
+    command: bin/rails tailwindcss:watch
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./rails:/app:z
+      - bundle_cache:/usr/local/bundle
+
+volumes:
+  pgdata:
+  bundle_cache:
+  vagas_data:

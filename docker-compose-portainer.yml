@@ -1,0 +1,44 @@
+# Stack pronta pra colar direto em Portainer > Stacks > Add stack.
+#
+# Diferença pro docker-compose.yml normal: nada aqui depende de arquivo .env
+# no host (Portainer não lê .env de disco por padrão) — as variáveis abaixo
+# vêm da seção "Environment variables" do editor de stack do Portainer.
+# Preencha lá: RAILS_MASTER_KEY, DATABASE_URL, BASIC_AUTH_USER,
+# BASIC_AUTH_PASSWORD, JOBSYNC_URL, JOBSYNC_TOKEN (opcionais têm default).
+#
+# NÃO adicione "command:" nem "working_dir:" nos serviços abaixo — a imagem
+# já sabe rodar sozinha (CMD embutido), e sobrescrever isso com um comando/
+# diretório de outro projeto (ex.: bin/rails direto, sem o WORKDIR /rails da
+# imagem) é a causa mais comum de "bin/rails: no such file or directory".
+
+services:
+  scraper:
+    image: docker.io/cybernetus/radar-de-vagas-scraper:${TAG:-latest}
+    volumes:
+      - vagas_data:/data
+    environment:
+      RAILS_IMPORT_URL: http://web:3000/import
+      RAILS_EMPRESAS_URL: http://web:3000/empresas_alvos.json
+      BASIC_AUTH_USER: ${BASIC_AUTH_USER:-}
+      BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD:-}
+    restart: unless-stopped
+
+  web:
+    image: docker.io/cybernetus/radar-de-vagas-web:${TAG:-latest}
+    ports:
+      - "3000:80"
+    environment:
+      RAILS_ENV: production
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:?defina RAILS_MASTER_KEY nas Environment variables da stack}
+      DATABASE_URL: ${DATABASE_URL:?defina DATABASE_URL nas Environment variables da stack}
+      VAGAS_SOURCE_DIR: /data
+      JOBSYNC_URL: ${JOBSYNC_URL:-}
+      JOBSYNC_TOKEN: ${JOBSYNC_TOKEN:-}
+      BASIC_AUTH_USER: ${BASIC_AUTH_USER:-}
+      BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD:-}
+    volumes:
+      - vagas_data:/data:ro
+    restart: unless-stopped
+
+volumes:
+  vagas_data:

@@ -7,7 +7,7 @@ Radar de vagas remotas DevOps/SRE/Cloud/Infra em três plataformas (Gupy, InHire
 com dashboard próprio pra acompanhar o que é novo, o que já foi enviado e onde as empresas
 da sua lista têm página de carreiras.
 
-Dois projetos, um repo, orquestrados pelo `docker-compose.yml` na raiz:
+Dois projetos, um repo, orquestrados por docker compose na raiz:
 
 | Pasta | O que é |
 |---|---|
@@ -20,14 +20,16 @@ Ver [CHANGELOG.md](CHANGELOG.md) e as [releases](../../releases) pro histórico 
 <img width="1280" height="644" alt="image" src="https://github.com/user-attachments/assets/9c36716c-34e0-4312-803e-bbeb18f1196f" />
 
 
-## Rodar tudo
+## Qual docker-compose usar
 
-```
-docker compose up
-```
+| Arquivo | Quando usar |
+|---|---|
+| [`docker-compose.yml`](docker-compose.yml) | Deploy padrão — imagens prontas do Docker Hub (`cybernetus/radar-de-vagas-{web,scraper}`), sem build local. `docker compose up -d`, com `.env` no host (copie de [`.env.example`](.env.example)). |
+| [`docker-compose-portainer.yml`](docker-compose-portainer.yml) | Cole direto em Portainer → Stacks → Add stack. Não depende de `.env` em disco (Portainer não lê); preencha as variáveis na seção "Environment variables" do editor. |
+| [`docker-compose-dev.yml`](docker-compose-dev.yml) | Desenvolvimento — builda as imagens localmente a partir do source, hot reload. `docker compose -f docker-compose-dev.yml up`. |
 
-Sobe banco (Postgres), o scraper (roda no boot e depois no cron 8h/12h/18h) e o dashboard em
-`http://localhost:3000`. Detalhes de cada parte nos READMEs das respectivas pastas.
+Sobe banco (Postgres, só no dev), o scraper (roda no boot e depois no cron 8h/12h/18h) e o
+dashboard em `http://localhost:3000`. Detalhes de cada parte nos READMEs das respectivas pastas.
 
 ## Atualizar o scraper a partir do projeto original
 
