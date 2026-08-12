@@ -1,4 +1,4 @@
-# Busca de vagas Tabajara
+# Radar de vagas
 
 Radar de vagas remotas DevOps/SRE/Cloud/Infra em três plataformas (Gupy, InHire e Sólides),
 com dashboard próprio pra acompanhar o que é novo, o que já foi enviado e onde as empresas
