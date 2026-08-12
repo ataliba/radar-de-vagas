@@ -87,7 +87,10 @@ async function fetchAll(q) {
       jobTitle: j.title,
       workplaceType: j.jobType,
       location: [j.city && j.city.name, j.state && j.state.code].filter(Boolean).join(' / '),
-      url: j.redirectLink || '',
+      // j.redirectLink aponta pra <empresa>.solides.jobs — subdomínio quase nunca
+      // provisionado (DNS NXDOMAIN pra maioria das empresas testadas). A URL do
+      // portal (vagas.solides.com.br/vagas/<id>) é a que de fato abre.
+      url: `https://vagas.solides.com.br/vagas/${j.id}`,
       publishedDate: j.createdAt || ''
     });
   }

@@ -20,6 +20,16 @@
     "solides_vagas": ""
   },
   {
+    "empresa": "Acesso",
+    "gupy": "",
+    "gupy_url": "",
+    "inhire": "",
+    "inhire_url": "",
+    "inhire_vagas_total": "",
+    "solides": "Sim",
+    "solides_vagas": 1
+  },
+  {
     "empresa": "Adyen",
     "gupy": "",
     "gupy_url": "",
@@ -277,7 +287,7 @@
     "inhire_url": "",
     "inhire_vagas_total": "",
     "solides": "Sim",
-    "solides_vagas": 3
+    "solides_vagas": 6
   },
   {
     "empresa": "Auvo",
@@ -507,7 +517,7 @@
     "inhire_url": "",
     "inhire_vagas_total": "",
     "solides": "Sim",
-    "solides_vagas": 1
+    "solides_vagas": 2
   },
   {
     "empresa": "Cadmus",
@@ -1327,7 +1337,7 @@
     "inhire_url": "https://intertechne.inhire.app/vagas",
     "inhire_vagas_total": 80,
     "solides": "Sim",
-    "solides_vagas": 4
+    "solides_vagas": 29
   },
   {
     "empresa": "Invillia",
@@ -1917,7 +1927,7 @@
     "inhire_url": "https://pitang.inhire.app/vagas",
     "inhire_vagas_total": 11,
     "solides": "Sim",
-    "solides_vagas": 8
+    "solides_vagas": 11
   },
   {
     "empresa": "Pitzi",
@@ -2237,7 +2247,7 @@
     "inhire_url": "",
     "inhire_vagas_total": "",
     "solides": "Sim",
-    "solides_vagas": 1
+    "solides_vagas": 2
   },
   {
     "empresa": "Telemont",
@@ -2557,6 +2567,6 @@
     "inhire_url": "https://zup.inhire.app/vagas",
     "inhire_vagas_total": 0,
     "solides": "Sim",
-    "solides_vagas": 1
+    "solides_vagas": 6
   }
 ]
