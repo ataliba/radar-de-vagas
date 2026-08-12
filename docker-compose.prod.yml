@@ -1,15 +1,15 @@
-# Deploy com imagens pré-buildadas (via build.sh) — sem bind mount de source,
-# sem build local. DB e JobSync são serviços externos (ver DATABASE_URL,
-# JOBSYNC_URL no .env deste host).
+# Deploy com imagens pré-buildadas (cybernetus/radar-de-vagas-{web,scraper}
+# no Docker Hub) — sem bind mount de source, sem build local. DB e JobSync
+# são serviços externos (ver DATABASE_URL, JOBSYNC_URL no .env deste host).
 # Uso: docker compose -f docker-compose.prod.yml up -d
-# Trocar REGISTRY/TAG pra fixar uma versão: TAG=0.1.0 docker compose -f docker-compose.prod.yml up -d
+# Trocar TAG pra fixar uma versão: TAG=0.2.1 docker compose -f docker-compose.prod.yml up -d
 
 services:
   # Pipeline de scraping (Gupy/InHire) — roda sozinho no container, escreve
   # os JSON em /data (volume compartilhado com o web) e avisa o Rails via
   # POST /import quando termina.
   scraper:
-    image: ${REGISTRY:-registry.example.local:5000}/busca-de-vagas-scraper:${TAG:-latest}
+    image: ${REGISTRY:-docker.io/cybernetus}/radar-de-vagas-scraper:${TAG:-latest}
     volumes:
       - vagas_data:/data
     environment:
@@ -20,7 +20,7 @@ services:
     restart: unless-stopped
 
   web:
-    image: ${REGISTRY:-registry.example.local:5000}/busca-de-vagas-web:${TAG:-latest}
+    image: ${REGISTRY:-docker.io/cybernetus}/radar-de-vagas-web:${TAG:-latest}
     # Sem "command:" — usa o CMD da imagem (./bin/thrust ./bin/rails server).
     # Thruster escuta na 80 (EXPOSE do Dockerfile) e repassa pro Puma na 3000.
     ports:
