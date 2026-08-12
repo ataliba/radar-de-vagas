@@ -16,6 +16,10 @@ Dois projetos, um repo, orquestrados pelo `docker-compose.yml` na raiz:
 
 Ver [CHANGELOG.md](CHANGELOG.md) e as [releases](../../releases) pro histórico de versões.
 
+
+<img width="1280" height="644" alt="image" src="https://github.com/user-attachments/assets/9c36716c-34e0-4312-803e-bbeb18f1196f" />
+
+
 ## Rodar tudo
 
 ```
