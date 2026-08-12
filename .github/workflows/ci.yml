@@ -65,7 +65,7 @@ jobs:
           working-directory: rails
 
       - name: Prepare RuboCop cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         env:
           DEPENDENCIES_HASH: ${{ hashFiles('rails/.ruby-version', 'rails/**/.rubocop.yml', 'rails/**/.rubocop_todo.yml', 'rails/Gemfile.lock') }}
         with:
