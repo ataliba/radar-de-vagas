@@ -1,6 +1,6 @@
 <% content_for :title, "presença por empresa · radar de vagas" %>
 
-<%= render "shared/header", subtitle: "Empresas da sua lista com página na Gupy e/ou InHire" %>
+<%= render "shared/header", subtitle: "Empresas da sua lista com página na Gupy, InHire e/ou Sólides" %>
 
 <div class="table-wrap">
   <table>
@@ -10,6 +10,8 @@
         <th>Gupy</th>
         <th>InHire</th>
         <th>Vagas InHire</th>
+        <th>Sólides</th>
+        <th>Vagas Sólides</th>
       </tr>
     </thead>
     <tbody>
@@ -31,6 +33,14 @@
             <% end %>
           </td>
           <td class="mono"><%= p.inhire_vagas_total %></td>
+          <td>
+            <% if p.solides == "Sim" %>
+              <span class="badge-sim">Sim</span>
+            <% else %>
+              <span class="mono">—</span>
+            <% end %>
+          </td>
+          <td class="mono"><%= p.solides_vagas %></td>
         </tr>
       <% end %>
     </tbody>

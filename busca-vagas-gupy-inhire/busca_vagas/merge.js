@@ -4,6 +4,7 @@ const { DIR } = require('./lib.js');
 
 const gupy = JSON.parse(fs.readFileSync(path.join(DIR, 'gupy_results.json'), 'utf8'));
 const inhire = JSON.parse(fs.readFileSync(path.join(DIR, 'inhire_results.json'), 'utf8'));
+const solides = JSON.parse(fs.readFileSync(path.join(DIR, 'solides_results.json'), 'utf8'));
 
 function norm(s){return String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();}
 function alerta(row){
@@ -17,7 +18,7 @@ function alerta(row){
   return notes.join('; ');
 }
 
-const all = [...gupy, ...inhire].map(r => ({
+const all = [...gupy, ...inhire, ...solides].map(r => ({
   empresa: r.companyList,
   plataforma: r.platform,
   na_lista: r.na_lista || 'Sim',
@@ -26,7 +27,7 @@ const all = [...gupy, ...inhire].map(r => ({
   tipo: r.workplaceType,
   local: r.location,
   link: r.url,
-  nome_na_plataforma: r.companyGupy || r.companyInhire || '',
+  nome_na_plataforma: r.companyGupy || r.companyInhire || r.companySolides || '',
   publicado: r.publishedDate || '',
   alerta: alerta(r)
 }));
@@ -49,7 +50,7 @@ deduped.sort((a,b) =>
   a.cargo_categoria.localeCompare(b.cargo_categoria));
 
 fs.writeFileSync(path.join(DIR, 'vagas_final.json'), JSON.stringify(deduped, null, 2));
-console.log(`Merged: gupy=${gupy.length} inhire=${inhire.length} -> deduped=${deduped.length}`);
-console.log(`Gupy rows: ${deduped.filter(r=>r.plataforma==='Gupy').length}, InHire rows: ${deduped.filter(r=>r.plataforma==='InHire').length}`);
+console.log(`Merged: gupy=${gupy.length} inhire=${inhire.length} solides=${solides.length} -> deduped=${deduped.length}`);
+console.log(`Gupy rows: ${deduped.filter(r=>r.plataforma==='Gupy').length}, InHire rows: ${deduped.filter(r=>r.plataforma==='InHire').length}, Solides rows: ${deduped.filter(r=>r.plataforma==='Solides').length}`);
 const withAlert = deduped.filter(r=>r.alerta).length;
 console.log(`Rows with alerta: ${withAlert}`);

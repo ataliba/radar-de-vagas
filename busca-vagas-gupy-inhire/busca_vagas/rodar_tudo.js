@@ -20,6 +20,7 @@ passo("[4] InHire: chute de slug a partir da lista", "inhire.js");
 passo("[5] InHire: coletar slugs da web (Wayback/urlscan/CC)", "harvest_inhire.js");
 passo("[6] InHire: validar todos os slugs na API", "validate_inhire.js");
 passo("[7] InHire: gerar saidas (vagas + empresas novas)", "inhire_saida.js");
+passo("[7b] Solides: buscar vagas (API portal-vacancies-new)", "solides.js");
 passo("[8] Consolidar e deduplicar vagas -> vagas_final.json", "merge.js");
 passo("[8b] Carimbar data de deteccao (novas = hoje)", "stamp_dates.js");
 passo("[9] Montar tabela de presenca", "presence.js");

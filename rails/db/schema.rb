@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_06_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_12_004504) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -38,6 +38,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_06_120000) do
     t.string "inhire"
     t.string "inhire_url"
     t.integer "inhire_vagas_total"
+    t.string "solides"
+    t.integer "solides_vagas"
     t.datetime "updated_at", null: false
     t.index ["empresa"], name: "index_presencas_on_empresa", unique: true
   end

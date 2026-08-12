@@ -45,7 +45,7 @@
               <div class="vaga"><%= link_to vaga.titulo_vaga, vaga.link, target: "_blank", rel: "noopener" %></div>
               <div class="meta"><span class="tag"><%= vaga.cargo_categoria %></span></div>
             </td>
-            <td class="mono <%= vaga.plataforma == 'Gupy' ? 'plataforma-gupy' : 'plataforma-inhire' %>"><%= vaga.plataforma %></td>
+            <td class="mono plataforma-<%= vaga.plataforma.downcase %>"><%= vaga.plataforma %></td>
             <td><%= vaga.local %></td>
             <td><%= vaga.na_lista == "Sim" ? content_tag(:span, "Sim", class: "badge-sim") : content_tag(:span, "Não", class: "badge-nao") %></td>
             <td class="mono"><%= vaga.detectado_em&.strftime("%d/%m/%Y") %></td>

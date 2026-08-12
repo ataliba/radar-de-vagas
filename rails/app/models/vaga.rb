@@ -6,7 +6,7 @@ class Vaga < ApplicationRecord
     "Kubernetes Engineer"
   ].freeze
 
-  PLATAFORMAS = %w[Gupy InHire].freeze
+  PLATAFORMAS = %w[Gupy InHire Solides].freeze
 
   STATUSES = %w[detectado enviada nao_aplicavel].freeze
 

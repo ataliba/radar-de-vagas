@@ -39,6 +39,8 @@ namespace :vagas do
           inhire: item["inhire"],
           inhire_url: item["inhire_url"],
           inhire_vagas_total: item["inhire_vagas_total"],
+          solides: item["solides"],
+          solides_vagas: item["solides_vagas"],
           created_at: Time.current,
           updated_at: Time.current
         }
