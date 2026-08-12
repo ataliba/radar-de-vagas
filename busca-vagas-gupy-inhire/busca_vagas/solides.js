@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { DIR, loadCompanies, compact, matchRole, isRemote, sleep } = require('./lib.js');
+const { DIR, loadCompanies, compact, matchRole, isRemote, slugify, sleep } = require('./lib.js');
 
 const QUERIES = [
   'DevOps', 'SRE', 'Site Reliability Engineer',
@@ -88,9 +88,11 @@ async function fetchAll(q) {
       workplaceType: j.jobType,
       location: [j.city && j.city.name, j.state && j.state.code].filter(Boolean).join(' / '),
       // j.redirectLink aponta pra <empresa>.solides.jobs — subdomínio quase nunca
-      // provisionado (DNS NXDOMAIN pra maioria das empresas testadas). A URL do
-      // portal (vagas.solides.com.br/vagas/<id>) é a que de fato abre.
-      url: `https://vagas.solides.com.br/vagas/${j.id}`,
+      // provisionado (DNS NXDOMAIN pra maioria das empresas testadas). A rota
+      // do portal é singular /vaga/:id/:slug — sem o :slug (ou no plural
+      // /vagas/:id) cai numa página genérica sem os dados da vaga. O slug é
+      // cosmético (carrega pelo id), qualquer valor não-vazio funciona.
+      url: `https://vagas.solides.com.br/vaga/${j.id}/${slugify(j.title)}`,
       publishedDate: j.createdAt || ''
     });
   }
