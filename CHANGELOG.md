@@ -2,6 +2,11 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [0.2.1] - 2026-08-12
+
+### Corrigido
+- URL das vagas Sólides quebrada: `redirectLink` da API aponta pra subdomínio `<empresa>.solides.jobs` que não resolve pra maioria das empresas (DNS NXDOMAIN). Trocado pra `vagas.solides.com.br/vagas/<id>`, formato que abre de verdade.
+
 ## [0.2.0] - 2026-08-11
 
 ### Adicionado
