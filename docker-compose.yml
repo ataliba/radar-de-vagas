@@ -1,14 +1,34 @@
 # Deploy com imagens pré-buildadas (cybernetus/radar-de-vagas-{web,scraper}
-# no Docker Hub) — sem bind mount de source, sem build local. DB e JobSync
-# são serviços externos (ver DATABASE_URL, JOBSYNC_URL no .env deste host).
+# no Docker Hub) — sem bind mount de source, sem build local. JobSync é
+# serviço externo (ver JOBSYNC_URL no .env deste host).
 # Uso: docker compose up -d
 # Trocar TAG pra fixar uma versão: TAG=0.2.1 docker compose up -d
 # Rodando via Portainer (Stacks)? Use docker-compose-portainer.yml em vez
 # deste — evita colar command/working_dir de outro lugar por engano.
 # Pra ambiente de desenvolvimento (build local, hot reload), veja
 # docker-compose-dev.yml.
+#
+# Inclui um Postgres interno (serviço "db"), pra ser 100% copy-paste sem
+# precisar de um banco já provisionado. Se você já tem um Postgres em outro
+# lugar, defina DATABASE_URL no .env (sobrescreve o default) e pode remover
+# o serviço "db" — só faça isso se já souber o que tá fazendo.
 
 services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: radar_de_vagas
+      POSTGRES_USER: radar
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?defina POSTGRES_PASSWORD no .env deste host}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U radar"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
   # Pipeline de scraping (Gupy/InHire) — roda sozinho no container, escreve
   # os JSON em /data (volume compartilhado com o web) e avisa o Rails via
   # POST /import quando termina.
@@ -32,7 +52,7 @@ services:
     environment:
       RAILS_ENV: production
       RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:?defina RAILS_MASTER_KEY no .env deste host}
-      DATABASE_URL: ${DATABASE_URL:?defina DATABASE_URL no .env deste host}
+      DATABASE_URL: ${DATABASE_URL:-postgres://radar:${POSTGRES_PASSWORD}@db:5432/radar_de_vagas}
       VAGAS_SOURCE_DIR: /data
       JOBSYNC_URL: ${JOBSYNC_URL:-}
       JOBSYNC_TOKEN: ${JOBSYNC_TOKEN:-}
@@ -40,7 +60,11 @@ services:
       BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD:-}
     volumes:
       - vagas_data:/data:ro
+    depends_on:
+      db:
+        condition: service_healthy
     restart: unless-stopped
 
 volumes:
   vagas_data:
+  pgdata:
