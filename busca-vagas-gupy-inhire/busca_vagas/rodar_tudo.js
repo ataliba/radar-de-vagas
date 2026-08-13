@@ -13,6 +13,7 @@ function passo(label, arquivo) {
 
 const t0 = Date.now();
 
+passo("[0] Buscar termos de busca -> termos.json", "extrair_termos.js");
 passo("[1] Extrair empresas do xlsx -> companies.json", "extrair_empresas.js");
 passo("[2] Gupy: buscar vagas (API global) + presenca pool", "gupy.js");
 passo("[3] Gupy: presenca real por subdominio", "gupy_presence_full.js");

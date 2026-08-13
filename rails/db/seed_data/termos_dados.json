@@ -1,0 +1,15 @@
+[
+  { "termo": "Analista de Dados", "rotulo": "Analista de Dados / Data Analyst" },
+  { "termo": "Data Analyst", "rotulo": "Analista de Dados / Data Analyst" },
+  { "termo": "Analista de BI", "rotulo": "BI / Business Intelligence" },
+  { "termo": "Business Intelligence", "rotulo": "BI / Business Intelligence" },
+  { "termo": "Inteligência de Negócios", "rotulo": "BI / Business Intelligence" },
+  { "termo": "Business Analyst", "rotulo": "Business Analyst / Analista de Negócios" },
+  { "termo": "Analista de Negócios", "rotulo": "Business Analyst / Analista de Negócios" },
+  { "termo": "Growth", "rotulo": "Growth Analyst / Analista de Growth" },
+  { "termo": "Revenue Operations", "rotulo": "Revenue Operations / RevOps" },
+  { "termo": "RevOps", "rotulo": "Revenue Operations / RevOps" },
+  { "termo": "Analista de Insights", "rotulo": "Analista de Insights" },
+  { "termo": "Inteligência de Mercado", "rotulo": "Analista de Inteligência de Mercado" },
+  { "termo": "Market Intelligence", "rotulo": "Analista de Inteligência de Mercado" }
+]

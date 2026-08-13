@@ -1,13 +1,13 @@
 const fs = require('fs');
 const path = require('path');
-const { DIR, loadCompanies, compact, matchRole, isRemote, sleep } = require('./lib.js');
+const { DIR, loadCompanies, compact, buildMatchRole, isRemote, sleep } = require('./lib.js');
 
-const QUERIES = [
-  'DevOps', 'SRE', 'Site Reliability Engineer',
-  'Cloud', 'Cloud Engineer', 'Cloud Security', 'Analista Cloud', 'Nuvem', 'Platform Engineer',
-  'Kubernetes',
-  'Infraestrutura', 'Analista de Infraestrutura', 'Sysadmin', 'Administrador de Sistemas'
-];
+// termos.json é gerado por extrair_termos.js a partir da config no Rails
+// (tela "termos de busca") — QUERIES é usado como parâmetro de busca na API
+// da Gupy, matchRole classifica o resultado final.
+const TERMOS = JSON.parse(fs.readFileSync(path.join(DIR, 'termos.json'), 'utf8'));
+const QUERIES = TERMOS.map((t) => t.termo);
+const matchRole = buildMatchRole(TERMOS);
 
 const API = 'https://employability-portal.gupy.io/api/v1/jobs';
 

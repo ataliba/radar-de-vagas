@@ -1,6 +1,11 @@
 const fs = require('fs');
 const path = require('path');
-const { DIR, loadCompanies, compact, tokens, matchRole, slugify, sleep, pool } = require('./lib.js');
+const { DIR, loadCompanies, compact, tokens, buildMatchRole, slugify, sleep, pool } = require('./lib.js');
+
+// termos.json é gerado por extrair_termos.js a partir da config no Rails
+// (tela "termos de busca") — InHire não busca por termo (varre a lista de
+// empresas), só usa matchRole pra filtrar o resultado.
+const matchRole = buildMatchRole(JSON.parse(fs.readFileSync(path.join(DIR, 'termos.json'), 'utf8')));
 
 const API = 'https://api.inhire.app/job-posts/public/pages';
 const HEADERS_BASE = { 'X-Inhire-Client': 'web-inhire', 'Content-Type': 'application/json', 'Accept': 'application/json' };

@@ -2,6 +2,15 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [0.3.0] - 2026-08-13
+
+### Adicionado
+- Tela "termos de busca" no dashboard (`/termos_busca`), pra tornar o radar agnóstico de área: escolha entre 2 presets prontos — DevOps/SRE/Cloud/Infra (o escopo atual) e Dados/BI/Growth (o escopo original do projeto, recuperado de antes do commit `a519a6b`) — mais um campo livre de termos customizados separados por vírgula. Config gravada na tabela `termos_busca`, única fonte pros dois consumidores do scraper (`QUERIES` de busca na API e `matchRole` de classificação de título), evitando dessincronia entre os dois. ([#9](https://github.com/ataliba/radar-de-vagas/issues/9))
+
+### Alterado
+- Scraper Node: `matchRole` fixo virou `buildMatchRole(termos)`, um builder que lê `termos.json` (buscado do Rails via `extrair_termos.js`, novo passo `[0]` do pipeline, com fallback pro preset DevOps embutido se o Rails estiver fora do ar) — `gupy.js`/`solides.js` também passam a montar `QUERIES` a partir dessa mesma lista, no lugar do array hardcoded.
+- `/vagas`: filtro de categoria (`@cargo_categorias`) passa a refletir os rótulos de fato gravados no banco, no lugar da constante fixa `Vaga::CARGO_CATEGORIAS` (removida) — necessário pro filtro funcionar com o preset Dados/BI/Growth também.
+
 ## [0.2.4] - 2026-08-13
 
 ### Corrigido

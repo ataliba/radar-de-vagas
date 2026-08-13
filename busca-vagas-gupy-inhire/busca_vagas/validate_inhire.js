@@ -1,5 +1,7 @@
 const fs = require('fs'), path = require('path');
-const { DIR, loadCompanies, compact, tokens, matchRole, slugify, pool, sleep, STOP } = require('./lib.js');
+const { DIR, loadCompanies, compact, tokens, buildMatchRole, slugify, pool, sleep, STOP } = require('./lib.js');
+
+const matchRole = buildMatchRole(JSON.parse(fs.readFileSync(path.join(DIR, 'termos.json'), 'utf8')));
 
 // generic business words that must NOT alone justify a company match
 const GENERIC = new Set([...STOP,
