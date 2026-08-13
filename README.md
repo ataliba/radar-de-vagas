@@ -25,7 +25,7 @@ Ver [CHANGELOG.md](CHANGELOG.md) e as [releases](../../releases) pro histórico 
 | Arquivo | Quando usar |
 |---|---|
 | [`docker-compose.yml`](docker-compose.yml) | Deploy padrão — imagens prontas do Docker Hub (`cybernetus/radar-de-vagas-{web,scraper}`), sem build local. `docker compose up -d`, com `.env` no host (copie de [`.env.example`](.env.example)). |
-| [`docker-compose-portainer.yml`](docker-compose-portainer.yml) | Cole direto em Portainer → Stacks → Add stack. Não depende de `.env` em disco (Portainer não lê); preencha as variáveis na seção "Environment variables" do editor. |
+| [`docker-compose-portainer.yml`](docker-compose-portainer.yml) | Cole direto em Portainer → Stacks → Add stack. Inclui Postgres interno (100% copy-paste, sem banco externo pra provisionar antes). Não depende de `.env` em disco (Portainer não lê); preencha as variáveis na seção "Environment variables" do editor. |
 | [`docker-compose-dev.yml`](docker-compose-dev.yml) | Desenvolvimento — builda as imagens localmente a partir do source, hot reload. `docker compose -f docker-compose-dev.yml up`. |
 
 Sobe banco (Postgres, só no dev), o scraper (roda no boot e depois no cron 8h/12h/18h) e o
