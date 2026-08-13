@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { DIR, loadCompanies, compact, matchRole, isRemote, sleep } = require('./lib.js');
+const { DIR, loadCompanies, compact, matchRole, isRemote, slugify, sleep } = require('./lib.js');
 
 const QUERIES = [
   'DevOps', 'SRE', 'Site Reliability Engineer',
@@ -87,7 +87,15 @@ async function fetchAll(q) {
       jobTitle: j.title,
       workplaceType: j.jobType,
       location: [j.city && j.city.name, j.state && j.state.code].filter(Boolean).join(' / '),
-      url: j.redirectLink || '',
+      // j.redirectLink aponta pra <empresa>.solides.jobs — subdomínio quase nunca
+      // provisionado (DNS NXDOMAIN pra maioria das empresas testadas). A rota
+      // do portal é singular /vaga/:id/:slug — sem o :slug (ou no plural
+      // /vagas/:id) cai numa página genérica sem os dados da vaga. O slug é
+      // cosmético (carrega pelo id), qualquer valor não-vazio funciona.
+      url: `https://vagas.solides.com.br/vaga/${j.id}/${slugify(j.title)}`,
+      // id puro, sem o slug — pra dedup estável no Rails (o slug muda se o
+      // título mudar, o id não).
+      idExterno: String(j.id),
       publishedDate: j.createdAt || ''
     });
   }

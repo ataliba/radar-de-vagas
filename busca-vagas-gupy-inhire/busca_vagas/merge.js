@@ -27,6 +27,7 @@ const all = [...gupy, ...inhire, ...solides].map(r => ({
   tipo: r.workplaceType,
   local: r.location,
   link: r.url,
+  id_externo: r.idExterno || null,
   nome_na_plataforma: r.companyGupy || r.companyInhire || r.companySolides || '',
   publicado: r.publishedDate || '',
   alerta: alerta(r)

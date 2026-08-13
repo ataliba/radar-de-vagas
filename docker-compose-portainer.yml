@@ -1,0 +1,68 @@
+# Stack pronta pra colar direto em Portainer > Stacks > Add stack.
+#
+# Diferença pro docker-compose.yml normal: nada aqui depende de arquivo .env
+# no host (Portainer não lê .env de disco por padrão) — as variáveis abaixo
+# vêm da seção "Environment variables" do editor de stack do Portainer.
+# Preencha lá: RAILS_MASTER_KEY, POSTGRES_PASSWORD, BASIC_AUTH_USER,
+# BASIC_AUTH_PASSWORD, JOBSYNC_URL, JOBSYNC_TOKEN (opcionais têm default).
+#
+# Inclui um Postgres interno (serviço "db") pra ficar 100% copy-paste, sem
+# precisar de um banco externo já provisionado. Se você já tem um Postgres
+# em outro lugar, defina DATABASE_URL manualmente nas Environment variables
+# da stack (sobrescreve o default abaixo) e pode remover o serviço "db".
+#
+# NÃO adicione "command:" nem "working_dir:" nos serviços abaixo — a imagem
+# já sabe rodar sozinha (CMD embutido), e sobrescrever isso com um comando/
+# diretório de outro projeto (ex.: bin/rails direto, sem o WORKDIR /rails da
+# imagem) é a causa mais comum de "bin/rails: no such file or directory".
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: radar_de_vagas
+      POSTGRES_USER: radar
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?defina POSTGRES_PASSWORD nas Environment variables da stack}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U radar"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  scraper:
+    image: docker.io/cybernetus/radar-de-vagas-scraper:${TAG:-latest}
+    volumes:
+      - vagas_data:/data
+    environment:
+      RAILS_IMPORT_URL: http://web:3000/import
+      RAILS_EMPRESAS_URL: http://web:3000/empresas_alvos.json
+      BASIC_AUTH_USER: ${BASIC_AUTH_USER:-}
+      BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD:-}
+    restart: unless-stopped
+
+  web:
+    image: docker.io/cybernetus/radar-de-vagas-web:${TAG:-latest}
+    ports:
+      - "3000:80"
+    environment:
+      RAILS_ENV: production
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:?defina RAILS_MASTER_KEY nas Environment variables da stack}
+      DATABASE_URL: ${DATABASE_URL:-postgres://radar:${POSTGRES_PASSWORD}@db:5432/radar_de_vagas}
+      VAGAS_SOURCE_DIR: /data
+      JOBSYNC_URL: ${JOBSYNC_URL:-}
+      JOBSYNC_TOKEN: ${JOBSYNC_TOKEN:-}
+      BASIC_AUTH_USER: ${BASIC_AUTH_USER:-}
+      BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD:-}
+    volumes:
+      - vagas_data:/data:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  vagas_data:
+  pgdata:
