@@ -2,6 +2,14 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [0.2.4] - 2026-08-13
+
+### Corrigido
+- Dedup de vagas Sólides: o link embute um slug derivado do título (cosmético), que muda se a empresa editar o título — o dedup por link sozinho gerava linha duplicada pra mesma vaga. Adiciona `id_externo` (id puro da Sólides) como chave de dedup, com índice único parcial no banco.
+
+### Adicionado
+- `bin/rails vagas:fix_solides_links` — rake task pra corrigir links Sólides gravados antes da 0.2.3 (subdomínio `.solides.jobs` ou `/vagas/:id` sem slug) e fazer backfill do `id_externo` nas linhas existentes. Rodada contra a base de produção: 38 links corrigidos, 30 duplicatas removidas.
+
 ## [0.2.3] - 2026-08-12
 
 ### Corrigido
