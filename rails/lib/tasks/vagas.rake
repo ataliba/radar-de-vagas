@@ -8,12 +8,22 @@ namespace :vagas do
     vagas_criadas = vagas_atualizadas = 0
 
     ler_json(source_dir, "vagas_final.json").each do |item|
-      vaga = Vaga.find_or_initialize_by(link: item["link"])
+      # Gupy/InHire têm link estável — dedup por ele. Sólides embute no link
+      # um slug derivado do título (cosmético, só pra rota abrir), que muda
+      # se a empresa editar o título; dedup por id_externo (o id puro da
+      # plataforma) pra não duplicar a vaga quando isso acontecer.
+      vaga = if item["id_externo"].present?
+        Vaga.find_or_initialize_by(plataforma: item["plataforma"], id_externo: item["id_externo"])
+      else
+        Vaga.find_or_initialize_by(link: item["link"])
+      end
       novo = vaga.new_record?
 
       vaga.assign_attributes(
         empresa: nome_empresa_limpo(item),
         plataforma: item["plataforma"],
+        link: item["link"],
+        id_externo: item["id_externo"],
         na_lista: item["na_lista"],
         cargo_categoria: item["cargo_categoria"],
         titulo_vaga: item["titulo_vaga"],
@@ -116,7 +126,16 @@ namespace :vagas do
       corrigidas += 1
     end
 
-    puts "Links Sólides corrigidos: #{corrigidas}. Duplicatas removidas: #{apagadas}."
+    preenchidos = 0
+    Vaga.where(plataforma: "Solides", id_externo: nil).find_each do |vaga|
+      id_vaga = vaga.link[%r{vagas\.solides\.com\.br/vaga/(\d+)/}, 1]
+      next unless id_vaga
+
+      vaga.update!(id_externo: id_vaga)
+      preenchidos += 1
+    end
+
+    puts "Links Sólides corrigidos: #{corrigidas}. Duplicatas removidas: #{apagadas}. id_externo preenchido: #{preenchidos}."
   end
 
   # Mesma lógica do slugify() de busca-vagas-gupy-inhire/busca_vagas/lib.js —

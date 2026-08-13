@@ -93,6 +93,9 @@ async function fetchAll(q) {
       // /vagas/:id) cai numa página genérica sem os dados da vaga. O slug é
       // cosmético (carrega pelo id), qualquer valor não-vazio funciona.
       url: `https://vagas.solides.com.br/vaga/${j.id}/${slugify(j.title)}`,
+      // id puro, sem o slug — pra dedup estável no Rails (o slug muda se o
+      // título mudar, o id não).
+      idExterno: String(j.id),
       publishedDate: j.createdAt || ''
     });
   }
