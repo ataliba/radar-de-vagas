@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_12_004504) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_13_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -51,6 +51,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_12_004504) do
     t.date "detectado_em"
     t.string "empresa"
     t.datetime "enviado_em"
+    t.string "id_externo"
     t.string "jobsync_job_id"
     t.string "link"
     t.string "local"
@@ -64,6 +65,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_12_004504) do
     t.datetime "updated_at", null: false
     t.index ["cargo_categoria"], name: "index_vagas_on_cargo_categoria"
     t.index ["link"], name: "index_vagas_on_link", unique: true
+    t.index ["plataforma", "id_externo"], name: "index_vagas_on_plataforma_and_id_externo", unique: true, where: "(id_externo IS NOT NULL)"
     t.index ["na_lista"], name: "index_vagas_on_na_lista"
     t.index ["plataforma"], name: "index_vagas_on_plataforma"
     t.index ["status"], name: "index_vagas_on_status"
