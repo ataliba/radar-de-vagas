@@ -83,4 +83,47 @@ namespace :vagas do
 
     subdominio.split(/[-_]/).map(&:capitalize).join(" ")
   end
+
+  desc "Corrige links de vagas Sólides gravados antes da 0.2.3 (subdomínio .solides.jobs ou /vagas/:id sem slug)"
+  task fix_solides_links: :environment do
+    corrigidas = apagadas = 0
+
+    Vaga.where(plataforma: "Solides").find_each do |vaga|
+      id_vaga =
+        vaga.link[%r{solides\.jobs/vacancies/(\d+)}, 1] ||
+        vaga.link[%r{vagas\.solides\.com\.br/vagas/(\d+)\z}, 1]
+
+      next unless id_vaga
+
+      novo_link = "https://vagas.solides.com.br/vaga/#{id_vaga}/#{slugify(vaga.titulo_vaga)}"
+      next if novo_link == vaga.link
+
+      # A mesma vaga pode ter sido gravada mais de uma vez sob formatos de
+      # link diferentes ao longo de versões antigas (índice único não pegava
+      # porque as strings eram diferentes). Se o link normalizado já existe
+      # em outra linha com status/detecção iguais, é duplicata — apaga a
+      # antiga. Se divergir, não mexe (checar manual).
+      existente = Vaga.find_by(link: novo_link)
+      if existente
+        if existente.status == vaga.status && existente.detectado_em == vaga.detectado_em
+          vaga.destroy!
+          apagadas += 1
+        end
+        next
+      end
+
+      vaga.update!(link: novo_link)
+      corrigidas += 1
+    end
+
+    puts "Links Sólides corrigidos: #{corrigidas}. Duplicatas removidas: #{apagadas}."
+  end
+
+  # Mesma lógica do slugify() de busca-vagas-gupy-inhire/busca_vagas/lib.js —
+  # o slug é cosmético (a página carrega pelo id), qualquer valor não-vazio serve.
+  def slugify(titulo)
+    titulo.to_s.unicode_normalize(:nfd).gsub(/[̀-ͯ]/, "")
+      .downcase.gsub("&", " and ").gsub(/[^a-z0-9]+/, "-").gsub(/\A-+|-+\z/, "")
+      .presence || "vaga"
+  end
 end
