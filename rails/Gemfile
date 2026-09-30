@@ -43,7 +43,7 @@ gem "thruster", require: false
 gem "image_processing", "~> 2.0"
 
 # Paginação leve (pinado <9: a partir da v9 a API virou outra coisa, Backend/Frontend sumiram)
-gem "pagy", "< 9"
+gem "pagy", "< 44"
 # Cliente HTTP pro servidor MCP do JobSync
 gem "faraday"
 
