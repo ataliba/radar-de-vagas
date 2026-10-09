@@ -77,11 +77,18 @@ educação, tech, grupo…) ou compact-substring forte. Sem isso dá falso posit
 
 ## Ordem dos scripts (o que o rodar_tudo.ps1 chama)
 
+> **Migração em andamento:** o `rodar_tudo.js` (container/produção — não o `.ps1`) já roda os
+> passos 1-3 em **Python** (`../radar_vagas/`, via `python -m radar_vagas.cli <comando>`), com o
+> mesmo contrato de entrada/saída. `extrair_empresas.js`, `gupy.js` e `gupy_presence_full.js`
+> abaixo continuam existindo só porque `rodar_tudo.ps1` (path legado Windows) ainda os chama;
+> InHire/Solides/merge/presence seguem em Node dos dois lados até serem portados também. Ver
+> `radar_vagas/` para a versão Python.
+
 | # | Script | Entrada → Saída |
 |---|--------|-----------------|
-| 1 | `extrair_empresas.ps1` | `empresas.xlsx` → `companies.json` |
-| 2 | `gupy.js` | companies.json → `gupy_results.json`, `gupy_presence.json` |
-| 3 | `gupy_presence_full.js` | companies.json → `gupy_presence_full.json` (presença por subdomínio) |
+| 1 | `extrair_empresas.ps1` / `.js` (`radar_vagas` em produção) | `empresas.xlsx` → `companies.json` |
+| 2 | `gupy.js` (`radar_vagas` em produção) | companies.json → `gupy_results.json`, `gupy_presence.json` |
+| 3 | `gupy_presence_full.js` (`radar_vagas` em produção) | companies.json → `gupy_presence_full.json` (presença por subdomínio) |
 | 4 | `inhire.js` | companies.json → `inhire_tenants.json` (chute de slug pela lista) |
 | 5 | `harvest_inhire.js` | web → `wb_app.txt`, `us_app_paged.json`, `cc_app.jsonl` |
 | 6 | `validate_inhire.js` | slugs → `inhire_all_tenants.json`, `inhire_all_vagas.json` |
@@ -98,10 +105,11 @@ educação, tech, grupo…) ou compact-substring forte. Sem isso dá falso posit
 
 ## Ajustar filtros (o que mexer)
 
-- **Cargos aceitos:** função `matchRole()` em `lib.js` (escopo DevOps/SRE, Cloud/Platform
-  Engineer, Infraestrutura/Sysadmin, Kubernetes Engineer — perfil do candidato, ver CV).
-  Adicione padrões pra incluir novos títulos (ex.: FinOps, Security Engineer, Network Engineer).
-- **Termos de busca da Gupy:** array `QUERIES` no topo de `gupy.js`.
+- **Cargos aceitos e termos de busca:** tela "termos de busca" no dashboard (`/termos_busca`) —
+  preset DevOps/SRE/Cloud/Infra ou Dados/BI/Growth + termos customizados. O passo `[0]`
+  (`extrair_termos.js`) grava `termos.json`, que alimenta tanto as queries de busca quanto a
+  classificação de título (`buildMatchRole()` em `lib.js`, `build_match_role()` em
+  `radar_vagas/roles.py`). Sem Rails no ar, cai no preset DevOps embutido.
 - **Só remoto vs incluir híbrido:** hoje filtra `workplaceType` remoto em `gupy.js`,
   `validate_inhire.js` e `merge.js`. Para incluir híbrido, afrouxe esses filtros (não recomendado:
   bate com o requisito de 100% remoto).
