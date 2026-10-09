@@ -41,9 +41,11 @@ gem "thruster", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 2.0"
-# image_processing 2.x não puxa mais o ruby-vips sozinho — sem ele o boot
-# (e o assets:precompile do Dockerfile) quebra com LoadError
-gem "ruby-vips", "~> 2.2"
+# image_processing 2.x não puxa mais o ruby-vips sozinho — sem ele o
+# assets:precompile do Dockerfile quebra com LoadError. require: false porque
+# o image_processing faz require "vips" sob demanda, e no boot quebraria em
+# ambiente sem libvips (runner da CI)
+gem "ruby-vips", "~> 2.2", require: false
 
 # Paginação leve (pinado <9: a partir da v9 a API virou outra coisa, Backend/Frontend sumiram)
 gem "pagy", "< 9"
