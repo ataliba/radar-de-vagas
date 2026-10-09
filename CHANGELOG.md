@@ -2,6 +2,11 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [0.3.2] - 2026-10-08
+
+### Corrigido
+- Imagem web não buildava (`assets:precompile` com `LoadError: ImageProcessing::Vips requires the ruby-vips gem`): o bump do `image_processing` 1.14 → 2.0.3 (#5) deixou de puxar o `ruby-vips` como dependência. Adicionado `gem "ruby-vips"` explícito no Gemfile. Afetava as tags 0.3.0 e 0.3.1 — não há imagem web publicada pra essas versões; use a 0.3.2.
+
 ## [0.3.1] - 2026-10-08
 
 ### Alterado
