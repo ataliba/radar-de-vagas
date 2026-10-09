@@ -1,13 +1,13 @@
 const fs = require('fs');
 const path = require('path');
-const { DIR, loadCompanies, compact, matchRole, isRemote, slugify, sleep } = require('./lib.js');
+const { DIR, loadCompanies, compact, buildMatchRole, isRemote, slugify, sleep } = require('./lib.js');
 
-const QUERIES = [
-  'DevOps', 'SRE', 'Site Reliability Engineer',
-  'Cloud', 'Cloud Engineer', 'Cloud Security', 'Analista Cloud', 'Nuvem', 'Platform Engineer',
-  'Kubernetes',
-  'Infraestrutura', 'Analista de Infraestrutura', 'Sysadmin', 'Administrador de Sistemas'
-];
+// termos.json é gerado por extrair_termos.js a partir da config no Rails
+// (tela "termos de busca") — QUERIES é usado como parâmetro de busca na API
+// da Sólides, matchRole classifica o resultado final.
+const TERMOS = JSON.parse(fs.readFileSync(path.join(DIR, 'termos.json'), 'utf8'));
+const QUERIES = TERMOS.map((t) => t.termo);
+const matchRole = buildMatchRole(TERMOS);
 
 const API = 'https://apigw.solides.com.br/jobs/v3/portal-vacancies-new';
 // NOTE: backend silently returns count=0/data=[] for take>14 (undocumented cap) — keep take<=14.

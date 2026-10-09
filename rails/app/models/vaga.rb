@@ -1,11 +1,4 @@
 class Vaga < ApplicationRecord
-  CARGO_CATEGORIAS = [
-    "DevOps Engineer / SRE",
-    "Cloud Engineer / Cloud Security / Platform Engineer",
-    "Infraestrutura / Sysadmin",
-    "Kubernetes Engineer"
-  ].freeze
-
   PLATAFORMAS = %w[Gupy InHire Solides].freeze
 
   STATUSES = %w[detectado enviada nao_aplicavel].freeze

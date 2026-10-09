@@ -1,0 +1,16 @@
+[
+  { "termo": "DevOps", "rotulo": "DevOps Engineer / SRE" },
+  { "termo": "SRE", "rotulo": "DevOps Engineer / SRE" },
+  { "termo": "Site Reliability Engineer", "rotulo": "DevOps Engineer / SRE" },
+  { "termo": "Cloud", "rotulo": "Cloud Engineer / Cloud Security / Platform Engineer" },
+  { "termo": "Cloud Engineer", "rotulo": "Cloud Engineer / Cloud Security / Platform Engineer" },
+  { "termo": "Cloud Security", "rotulo": "Cloud Engineer / Cloud Security / Platform Engineer" },
+  { "termo": "Analista Cloud", "rotulo": "Cloud Engineer / Cloud Security / Platform Engineer" },
+  { "termo": "Nuvem", "rotulo": "Cloud Engineer / Cloud Security / Platform Engineer" },
+  { "termo": "Platform Engineer", "rotulo": "Cloud Engineer / Cloud Security / Platform Engineer" },
+  { "termo": "Kubernetes", "rotulo": "Kubernetes Engineer" },
+  { "termo": "Infraestrutura", "rotulo": "Infraestrutura / Sysadmin" },
+  { "termo": "Analista de Infraestrutura", "rotulo": "Infraestrutura / Sysadmin" },
+  { "termo": "Sysadmin", "rotulo": "Infraestrutura / Sysadmin" },
+  { "termo": "Administrador de Sistemas", "rotulo": "Infraestrutura / Sysadmin" }
+]

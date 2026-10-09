@@ -26,17 +26,27 @@ function tokens(s) {
     .split(/\s+/).filter(t => t && !STOP.has(t));
 }
 
-// Role matching against a job title. Returns canonical role label or null.
-// Escopo DevOps/Cloud/Infra (perfil do candidato) — ordem importa: mais
-// específico primeiro (Kubernetes antes de DevOps genérico, etc).
-function matchRole(title) {
-  const t = ' ' + String(title).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ') + ' ';
-  const has = (re) => re.test(t);
-  if (has(/ kubernetes /) || has(/ k8s /)) return 'Kubernetes Engineer';
-  if (has(/ devops /) || has(/ dev ops /) || has(/ sre /) || has(/ site reliability /)) return 'DevOps Engineer / SRE';
-  if (has(/ cloud /) || has(/ nuvem /) || has(/ platform engineer /)) return 'Cloud Engineer / Cloud Security / Platform Engineer';
-  if (has(/ infraestrutura /) || has(/ sysadmin /) || has(/ system administrator /) || has(/ infrastructure engineer /) || has(/ administrador de redes /) || has(/ administrador de sistemas /)) return 'Infraestrutura / Sysadmin';
-  return null;
+// same accent-strip + lowercase + non-alnum->space normalization matchRole
+// always used, padded with spaces so substring checks respect word boundaries
+function normalizeTitle(s) {
+  return ' ' + String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ') + ' ';
+}
+
+// Builds a title -> canonical role label matcher from a list of
+// { termo, rotulo } (ver termos.json, gerado por extrair_termos.js a partir
+// da config em TermoBusca no Rails). Termos mais longos (mais específicos)
+// são checados primeiro, o que substitui a priorização manual que existia
+// antes (Kubernetes antes de DevOps genérico, etc) sem precisar hardcodar a
+// ordem.
+function buildMatchRole(termos) {
+  const sorted = termos
+    .map(({ termo, rotulo }) => ({ termo: normalizeTitle(termo).trim(), rotulo }))
+    .sort((a, b) => b.termo.length - a.termo.length);
+  return (title) => {
+    const t = normalizeTitle(title);
+    const hit = sorted.find(({ termo }) => t.includes(` ${termo} `));
+    return hit ? hit.rotulo : null;
+  };
 }
 
 // URL slug from a job title (lowercase, strip accents, non-alnum -> hyphen).
@@ -75,4 +85,4 @@ async function pool(items, worker, concurrency = 12) {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-module.exports = { DIR, loadCompanies, compact, tokens, matchRole, slugify, isRemote, pool, sleep, STOP };
+module.exports = { DIR, loadCompanies, compact, tokens, buildMatchRole, slugify, isRemote, pool, sleep, STOP };

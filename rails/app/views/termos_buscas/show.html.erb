@@ -1,0 +1,45 @@
+<% content_for :title, "Termos de busca · radar de vagas" %>
+
+<%= render "shared/header", subtitle: "#{@termos_ativos.count} termos ativos na busca do scraper" %>
+
+<%= form_with url: termos_busca_path, method: :patch, class: "controls termos-busca-form" do %>
+  <div class="preset-choice">
+    <label>
+      <%= radio_button_tag :preset, "preset_devops", @preset_ativo == "preset_devops" %>
+      DevOps / SRE / Cloud / Infra
+    </label>
+    <label>
+      <%= radio_button_tag :preset, "preset_dados", @preset_ativo == "preset_dados" %>
+      Dados / BI / Growth
+    </label>
+  </div>
+
+  <%= text_area_tag :termos_customizados, @termos_custom.map(&:termo).join(", "),
+        placeholder: "Termos customizados, separados por vírgula (ex.: Administração de empresas, Gestor, Líder)",
+        rows: 3 %>
+
+  <%= submit_tag "Salvar", class: "submit-btn" %>
+<% end %>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Termo</th>
+        <th>Rótulo exibido</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @termos_ativos.each do |t| %>
+        <tr>
+          <td class="empresa"><%= t.termo %></td>
+          <td><%= t.rotulo %></td>
+        </tr>
+      <% end %>
+
+      <% if @termos_ativos.empty? %>
+        <tr><td colspan="2" class="empty">Nenhum termo ativo.</td></tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

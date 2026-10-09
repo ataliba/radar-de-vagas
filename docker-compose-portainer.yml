@@ -39,6 +39,7 @@ services:
     environment:
       RAILS_IMPORT_URL: http://web:3000/import
       RAILS_EMPRESAS_URL: http://web:3000/empresas_alvos.json
+      RAILS_TERMOS_URL: http://web:3000/termos_busca.json
       BASIC_AUTH_USER: ${BASIC_AUTH_USER:-}
       BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD:-}
     restart: unless-stopped

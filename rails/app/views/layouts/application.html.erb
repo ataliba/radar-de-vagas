@@ -26,6 +26,7 @@
         <span><%= link_to "presença por empresa", presencas_path, class: current_page?(presencas_path) ? "active" : nil %></span>
         <span><%= link_to "InHire novas", empresas_novas_path, class: current_page?(empresas_novas_path) ? "active" : nil %></span>
         <span><%= link_to "empresas cadastradas", empresas_alvos_path, class: current_page?(empresas_alvos_path) ? "active" : nil %></span>
+        <span><%= link_to "termos de busca", termos_busca_path, class: current_page?(termos_busca_path) ? "active" : nil %></span>
         <span><%= button_to "reimportar dados", import_path, method: :post %></span>
       </div>
 

@@ -2,6 +2,7 @@
 # entrada. companies.json e empresas.xlsx (entrada, usada pra popular o
 # banco) ficam de fora desta lista de propósito.
 /vagas_gupy_inhire.xlsx
+busca_vagas/termos.json
 busca_vagas/gupy_presence.json
 busca_vagas/gupy_presence_full.json
 busca_vagas/gupy_results.json

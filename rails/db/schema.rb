@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_13_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_13_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -44,6 +44,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_13_000000) do
     t.index ["empresa"], name: "index_presencas_on_empresa", unique: true
   end
 
+  create_table "termos_busca", force: :cascade do |t|
+    t.boolean "ativo", default: false, null: false
+    t.datetime "created_at", null: false
+    t.string "origem", null: false
+    t.string "rotulo", null: false
+    t.string "termo", null: false
+    t.datetime "updated_at", null: false
+    t.index ["termo", "origem"], name: "index_termos_busca_on_termo_and_origem", unique: true
+  end
+
   create_table "vagas", force: :cascade do |t|
     t.string "alerta"
     t.string "cargo_categoria"
@@ -65,8 +75,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_13_000000) do
     t.datetime "updated_at", null: false
     t.index ["cargo_categoria"], name: "index_vagas_on_cargo_categoria"
     t.index ["link"], name: "index_vagas_on_link", unique: true
-    t.index ["plataforma", "id_externo"], name: "index_vagas_on_plataforma_and_id_externo", unique: true, where: "(id_externo IS NOT NULL)"
     t.index ["na_lista"], name: "index_vagas_on_na_lista"
+    t.index ["plataforma", "id_externo"], name: "index_vagas_on_plataforma_and_id_externo", unique: true, where: "(id_externo IS NOT NULL)"
     t.index ["plataforma"], name: "index_vagas_on_plataforma"
     t.index ["status"], name: "index_vagas_on_status"
   end

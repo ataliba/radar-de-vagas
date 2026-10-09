@@ -5,7 +5,7 @@ class VagasController < ApplicationController
   }.freeze
 
   def index
-    @cargo_categorias = Vaga::CARGO_CATEGORIAS
+    @cargo_categorias = Vaga.distinct.order(:cargo_categoria).pluck(:cargo_categoria).compact
     @plataformas = Vaga::PLATAFORMAS
     @sort = ORDENACOES.key?(params[:sort]) ? params[:sort] : "detectado_em"
     @stats = Vaga.stats_gerais
