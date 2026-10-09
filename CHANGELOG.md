@@ -2,7 +2,15 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
-## [0.3.0] - 2026-08-13
+## [0.3.1] - 2026-10-08
+
+### Alterado
+- Scraper: passos `[1]`–`[3]` do pipeline (extrair empresas, busca Gupy, presença Gupy por subdomínio) migrados de Node pra Python (`busca-vagas-gupy-inhire/radar_vagas/`, chamado via `python -m radar_vagas.cli <comando>`), com o mesmo contrato de entrada/saída (`companies.json`, `gupy_results.json`, `gupy_presence.json`, `gupy_presence_full.json`). Primeira etapa da migração incremental por plataforma — InHire, Sólides, merge e presence seguem em Node. A imagem do scraper passa a carregar `python3` + dependências (`httpx`, `openpyxl`) junto do Node.
+
+### Corrigido
+- Port Python da Gupy respeita os termos de busca da 0.3.0: `QUERIES` e classificação de cargo saem do `termos.json` (`build_match_role()` em `radar_vagas/roles.py`, equivalente ao `buildMatchRole()` do Node), com fallback pro preset DevOps se o arquivo não existir. Antes ficavam fixos no escopo DevOps, ignorando o preset escolhido no dashboard.
+
+## [0.3.0] - 2026-10-08
 
 ### Adicionado
 - Tela "termos de busca" no dashboard (`/termos_busca`), pra tornar o radar agnóstico de área: escolha entre 2 presets prontos — DevOps/SRE/Cloud/Infra (o escopo atual) e Dados/BI/Growth (o escopo original do projeto, recuperado de antes do commit `a519a6b`) — mais um campo livre de termos customizados separados por vírgula. Config gravada na tabela `termos_busca`, única fonte pros dois consumidores do scraper (`QUERIES` de busca na API e `matchRole` de classificação de título), evitando dessincronia entre os dois. ([#9](https://github.com/ataliba/radar-de-vagas/issues/9))

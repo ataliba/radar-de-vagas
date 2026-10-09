@@ -9,6 +9,8 @@ set -e
 mkdir -p /data
 cp -f /opt/scraper/*.js /data/
 cp -f /opt/scraper/empresas.xlsx /data/empresas.xlsx
+rm -rf /data/radar_vagas
+cp -r /opt/scraper/radar_vagas /data/radar_vagas
 
 executar() {
   echo "==== pipeline $(date) ===="
