@@ -1,11 +1,11 @@
 const fs = require('fs');
 const path = require('path');
-const { DIR } = require('./lib.js');
+const { DIR, readJsonOr } = require('./lib.js');
 
-const gupy = JSON.parse(fs.readFileSync(path.join(DIR, 'gupy_presence_full.json'), 'utf8'));
-const inhireAll = JSON.parse(fs.readFileSync(path.join(DIR, 'inhire_all_tenants.json'), 'utf8'));
+const gupy = readJsonOr('gupy_presence_full.json', []);
+const inhireAll = readJsonOr('inhire_all_tenants.json', []);
 const inhire = inhireAll.filter(t => t.listCompany); // only companies from the user's list
-const solides = JSON.parse(fs.readFileSync(path.join(DIR, 'solides_presence.json'), 'utf8'));
+const solides = readJsonOr('solides_presence.json', []);
 
 const map = new Map();
 function get(emp){ if(!map.has(emp)) map.set(emp,{empresa:emp,gupy:'',gupy_url:'',inhire:'',inhire_url:'',inhire_vagas_total:'',solides:'',solides_vagas:''}); return map.get(emp); }

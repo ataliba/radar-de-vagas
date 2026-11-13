@@ -1,10 +1,10 @@
 const fs = require('fs');
 const path = require('path');
-const { DIR } = require('./lib.js');
+const { DIR, readJsonOr } = require('./lib.js');
 
-const gupy = JSON.parse(fs.readFileSync(path.join(DIR, 'gupy_results.json'), 'utf8'));
-const inhire = JSON.parse(fs.readFileSync(path.join(DIR, 'inhire_results.json'), 'utf8'));
-const solides = JSON.parse(fs.readFileSync(path.join(DIR, 'solides_results.json'), 'utf8'));
+const gupy = readJsonOr('gupy_results.json', []);
+const inhire = readJsonOr('inhire_results.json', []);
+const solides = readJsonOr('solides_results.json', []);
 
 function norm(s){return String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();}
 function alerta(row){
