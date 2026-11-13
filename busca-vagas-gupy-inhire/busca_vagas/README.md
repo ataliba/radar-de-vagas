@@ -52,7 +52,7 @@ lista pública de clientes. A sacada foi usar as **APIs públicas** direto (curl
 scraping de página — WebFetch dá 403/SPA, mas as APIs JSON respondem.
 
 ### Gupy — tem busca global
-- API: `GET https://employability-portal.gupy.io/api/v1/jobs?jobName=<cargo>&offset=<n>&limit=100`
+- API: `GET https://portal.gupy.io/api/job-search/jobs?jobName=<cargo>&offset=<n>&limit=100`
 - Campos: `careerPageName` (empresa), `name` (título), `workplaceType` (`remote`/`hybrid`/`on-site`), `jobUrl`.
 - **Cuidado:** `pagination.total` é bugado (trava em 100 quando `limit>=100`). Pagino por offset até uma página vir com menos de 100 linhas. `limit=1000` é rejeitado.
 - Presença real por empresa: `https://<slug>.gupy.io/` → 200 + `<title>Empresa</title>` se existe; 404 se não.

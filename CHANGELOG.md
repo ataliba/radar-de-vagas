@@ -2,6 +2,18 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [0.3.3] - 2026-11-12
+
+### Corrigido
+- Gupy parou de retornar vagas: a API pública `employability-portal.gupy.io/api/v1/jobs` saiu do ar (404). Busca migrada pro endpoint que o próprio portal usa, `portal.gupy.io/api/job-search/jobs` (mesmos parâmetros `jobName`/`offset`/`limit` e mesmo formato `data`/`pagination`), em `radar_vagas/platforms/gupy.py` e no `gupy.js` legado. O endpoint novo não traz `isRemoteWork` nem `country` — o filtro de remoto segue por `workplaceType`.
+
+### Alterado
+- Pipeline do scraper (`rodar_tudo.js`) tolerante a falha por plataforma: os passos foram agrupados (Preparação, Gupy, InHire, Sólides, Consolidação) e uma falha pula só o resto do próprio grupo — antes, o 404 da Gupy no passo `[2]` abortava o pipeline inteiro e InHire/Sólides nunca rodavam. Plataforma que falhou fica com o resultado da última coleta boa; `merge.js`/`presence.js` aceitam arquivo de entrada ausente (`readJsonOr()` em `lib.js`). Resumo das falhas no fim do log. Sai com código ≠ 0 só se a Consolidação falhar; nesse caso o `entrypoint.sh` pula o import no Rails sem derrubar o container.
+- Timeout por passo do pipeline: 30 min por padrão (ajustável via env `PASSO_TIMEOUT_MIN`), 60 min pro `harvest_inhire.js` (Wayback/urlscan/Common Crawl). Estourou, o processo recebe SIGTERM e o passo conta como falha do grupo — uma API que trava sem responder não segura mais o pipeline inteiro.
+
+### Segurança
+- Gems do Rails atualizadas por advisories novos apontados pelo `bundle-audit` (CI `scan_ruby`): Rails 8.1.3.1 → 8.1.4.1, rack 3.2.6 → 3.2.8, rails-html-sanitizer 1.7.1 → 1.7.2, nokogiri 1.19.4 → 1.19.7, loofah 2.25.2 → 2.25.3, crass 1.0.7 → 1.0.8, net-ssh 7.3.3 → 7.3.10. `bundle update --conservative`, só essas e o que elas arrastam.
+
 ## [0.3.2] - 2026-10-08
 
 ### Corrigido

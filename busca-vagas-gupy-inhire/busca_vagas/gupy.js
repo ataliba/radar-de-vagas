@@ -9,7 +9,7 @@ const TERMOS = JSON.parse(fs.readFileSync(path.join(DIR, 'termos.json'), 'utf8')
 const QUERIES = TERMOS.map((t) => t.termo);
 const matchRole = buildMatchRole(TERMOS);
 
-const API = 'https://employability-portal.gupy.io/api/v1/jobs';
+const API = 'https://portal.gupy.io/api/job-search/jobs';
 
 async function fetchPage(q, offset, limit) {
   const url = `${API}?jobName=${encodeURIComponent(q)}&offset=${offset}&limit=${limit}`;

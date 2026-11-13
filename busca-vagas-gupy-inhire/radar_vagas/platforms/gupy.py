@@ -1,6 +1,6 @@
 """Gupy — port of gupy.js + gupy_presence_full.js.
 
-Busca global via API pública (employability-portal.gupy.io) e checagem de
+Busca global via API pública (portal.gupy.io/api/job-search) e checagem de
 presença por empresa via probe do subdomínio (<slug>.gupy.io).
 """
 import asyncio
@@ -15,7 +15,7 @@ from ..pool import run_pool
 from ..roles import build_match_role, load_termos
 from .base import PlatformScraper
 
-API = "https://employability-portal.gupy.io/api/v1/jobs"
+API = "https://portal.gupy.io/api/job-search/jobs"
 
 _LIMIT = 100
 _MAX_OFFSET = 3000  # safety cap

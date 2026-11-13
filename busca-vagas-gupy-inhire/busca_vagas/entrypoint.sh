@@ -14,7 +14,13 @@ cp -r /opt/scraper/radar_vagas /data/radar_vagas
 
 executar() {
   echo "==== pipeline $(date) ===="
-  ( cd /data && node rodar_tudo.js )
+  # rodar_tudo.js so sai != 0 se a consolidacao falhar (falha de uma
+  # plataforma isolada sai com 0). Nesse caso nao ha nada novo pra importar,
+  # mas o container nao pode morrer por isso (set -e) — o cron tenta de novo.
+  if ! ( cd /data && node rodar_tudo.js ); then
+    echo "erro: consolidacao falhou — pulando import no Rails"
+    return 0
+  fi
   echo "==== avisando o Rails pra importar ===="
   curl -fsS -u "${BASIC_AUTH_USER:-}:${BASIC_AUTH_PASSWORD:-}" -X POST "${RAILS_IMPORT_URL:-http://web:3000/import}" \
     && echo "ok" \

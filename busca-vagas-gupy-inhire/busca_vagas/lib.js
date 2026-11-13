@@ -85,4 +85,16 @@ async function pool(items, worker, concurrency = 12) {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-module.exports = { DIR, loadCompanies, compact, tokens, buildMatchRole, slugify, isRemote, pool, sleep, STOP };
+// Lê um JSON de saída de passo anterior. Se o arquivo não existe (volume novo
+// e a plataforma falhou no rodar_tudo), devolve `fallback` com aviso em vez de
+// derrubar a consolidação inteira.
+function readJsonOr(file, fallback) {
+  const p = path.join(DIR, file);
+  if (!fs.existsSync(p)) {
+    console.warn(`  aviso: ${file} não existe — seguindo sem ele`);
+    return fallback;
+  }
+  return JSON.parse(fs.readFileSync(p, 'utf8'));
+}
+
+module.exports = { DIR, readJsonOr, loadCompanies, compact, tokens, buildMatchRole, slugify, isRemote, pool, sleep, STOP };
