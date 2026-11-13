@@ -50,6 +50,10 @@ services:
     # Thruster escuta na 80 (EXPOSE do Dockerfile) e repassa pro Puma na 3000.
     ports:
       - "3000:80"
+    # Thruster roda como usuário não-root e escuta na 80. Docker já libera
+    # portas baixas dentro do container por padrão; Podman rootless não.
+    sysctls:
+      net.ipv4.ip_unprivileged_port_start: 0
     environment:
       RAILS_ENV: production
       # Um dos dois: SECRET_KEY_BASE (qualquer um — gere com
