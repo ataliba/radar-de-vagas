@@ -20,6 +20,58 @@ Ver [CHANGELOG.md](CHANGELOG.md) e as [releases](../../releases) pro histórico 
 <img width="1280" height="644" alt="image" src="https://github.com/user-attachments/assets/9c36716c-34e0-4312-803e-bbeb18f1196f" />
 
 
+## Instalação rápida
+
+Pré-requisito: uma máquina (Linux, macOS ou Windows com WSL2) com
+[Docker](https://docs.docker.com/engine/install/) e o plugin `docker compose`. Não precisa
+de Ruby, Python nem Postgres instalados: as imagens já vêm prontas do Docker Hub.
+
+**1. Baixe o compose e o modelo de configuração**
+
+```bash
+mkdir radar-de-vagas && cd radar-de-vagas
+curl -fsSLO https://raw.githubusercontent.com/ataliba/radar-de-vagas/main/docker-compose.yml
+curl -fsSL https://raw.githubusercontent.com/ataliba/radar-de-vagas/main/.env.example -o .env
+```
+
+(Ou `git clone` do repo e `cp .env.example .env`, dá no mesmo.)
+
+**2. Preencha o `.env`**
+
+O mínimo pra subir são duas variáveis:
+
+```bash
+# chave de sessão do Rails, qualquer valor aleatório e longo
+sed -i "s/^SECRET_KEY_BASE=.*/SECRET_KEY_BASE=$(openssl rand -hex 64)/" .env
+# senha do Postgres interno
+sed -i "s/^POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=$(openssl rand -hex 16)/" .env
+```
+
+Vai expor o dashboard fora da sua máquina? Preencha também `BASIC_AUTH_USER` e
+`BASIC_AUTH_PASSWORD` (vazios = sem login). `JOBSYNC_URL`/`JOBSYNC_TOKEN` são opcionais, só
+pra quem usa o [JobSync](https://github.com/Gsync/jobsync).
+
+**3. Suba**
+
+```bash
+docker compose up -d
+docker compose ps          # db, scraper e web devem aparecer "running"/"healthy"
+```
+
+Abra `http://localhost:3000` (ou `http://IP-DA-MAQUINA:3000`). O scraper roda uma vez no
+boot e depois às 8h, 12h e 18h; a primeira leva de vagas aparece em alguns minutos.
+
+**Dia a dia**
+
+```bash
+docker compose logs -f scraper web   # acompanhar o que tá rolando
+docker compose pull && docker compose up -d   # atualizar pra última versão
+docker compose down                  # parar (dados ficam nos volumes)
+```
+
+Pra fixar uma versão em vez de `latest`: `TAG=0.3.3 docker compose up -d` (ou `TAG=` no
+`.env`). Usa Portainer? Veja o `docker-compose-portainer.yml` na tabela abaixo.
+
 ## Qual docker-compose usar
 
 | Arquivo | Quando usar |
