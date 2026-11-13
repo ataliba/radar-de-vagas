@@ -48,6 +48,10 @@ services:
     image: docker.io/cybernetus/radar-de-vagas-web:${TAG:-latest}
     ports:
       - "3000:80"
+    # Thruster roda como usuário não-root e escuta na 80. Docker já libera
+    # portas baixas dentro do container por padrão; Podman rootless não.
+    sysctls:
+      net.ipv4.ip_unprivileged_port_start: 0
     environment:
       RAILS_ENV: production
       # Um dos dois: SECRET_KEY_BASE (gere com `openssl rand -hex 64`) ou
