@@ -6,6 +6,13 @@ class JobSyncClient
 
   Resultado = Struct.new(:sucesso, :job_id, :duplicado, :mensagem, keyword_init: true)
 
+  # Com URL e token, a gestão das vagas escolhidas é feita no JobSync e o
+  # Kanban interno fica somente leitura. Sem eles, o Kanban interno assume
+  # (issue #48). Exige os dois: o compose de dev já preenche a URL por padrão.
+  def self.configurado?
+    ENV["JOBSYNC_URL"].present? && ENV["JOBSYNC_TOKEN"].present?
+  end
+
   def initialize(base_url: ENV["JOBSYNC_URL"], token: ENV["JOBSYNC_TOKEN"])
     @base_url = base_url.to_s.chomp("/")
     @token = token

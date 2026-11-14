@@ -9,7 +9,13 @@ class ApplicationController < ActionController::Base
 
   before_action :autenticar_basic
 
+  helper_method :modo_jobsync?
+
   private
+
+  def modo_jobsync?
+    JobSyncClient.configurado?
+  end
 
   # Sem BASIC_AUTH_USER/BASIC_AUTH_PASSWORD configuradas, o app fica aberto
   # (dev local). Em produção configure as duas. O scraper (container à

@@ -137,3 +137,32 @@ tr:hover td{background:var(--panel-2);}
 .pagy-nav a{color:var(--muted-2);text-decoration:none;padding:4px 8px;}
 .pagy-nav a:hover{color:var(--accent);}
 .pagy-nav .current{color:var(--accent);padding:4px 8px;}
+
+/* Kanban interno (issue #48) */
+.card.dragging{opacity:.4;}
+.card-readonly{cursor:default;}
+.card-readonly:active{cursor:default;}
+.card-vaga a{text-decoration:none;}
+.card-vaga a:hover{color:var(--accent);text-decoration:underline;}
+.card-descontinuada{border-style:dashed;}
+.card-descontinuada .card-empresa,.card-descontinuada .card-vaga{opacity:.65;}
+.badge-status.descontinuada{color:var(--muted-2);background:var(--panel);border-color:var(--border);}
+.badge-status.no-kanban{color:var(--accent);background:var(--accent-dim);border-color:#1d5a70;}
+.col-encerra .col-head-title{color:var(--muted-2);}
+.col-encerra .card{opacity:.8;}
+.col-edit{padding:8px 14px;border-bottom:1px solid var(--border);font-size:12px;}
+.col-edit summary{cursor:pointer;color:var(--muted);font-family:var(--mono);font-size:11px;}
+.col-edit form,.col-edit-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px;}
+.col-edit input[type=text],.col-edit select,.col-nova-form input[type=text]{flex:1;min-width:0;background:var(--panel-2);border:1px solid var(--border);color:var(--text);font-size:12.5px;padding:6px 8px;border-radius:6px;}
+.col-edit .btn{padding:5px 9px;font-size:11.5px;}
+.btn-danger{color:var(--danger);border-color:#5a1424;}
+.btn-danger:hover{background:var(--danger-dim);color:var(--danger);}
+.col-nova{border-style:dashed;}
+.col-nova-form{padding:12px 14px;display:flex;flex-direction:column;gap:8px;align-items:flex-start;}
+.col-nova-form input[type=text]{width:100%;}
+.card-historico{margin-top:8px;font-size:11.5px;color:var(--muted-2);}
+.card-historico summary{cursor:pointer;color:var(--muted);font-family:var(--mono);font-size:10.5px;}
+.card-historico ol{margin:6px 0 0;padding-left:16px;display:flex;flex-direction:column;gap:3px;}
+.card-historico .mono{font-size:10px;color:var(--muted);}
+.kanban-dica{margin-top:16px;color:var(--muted);font-size:13px;}
+.kanban-dica a{color:var(--accent);}

@@ -13,7 +13,17 @@ Rails.application.routes.draw do
   resources :vagas, only: [ :index ] do
     collection do
       post :enviar
+      post :adicionar_kanban
       post :marcar_nao_aplicavel
+    end
+    member do
+      patch :mover_kanban
+    end
+  end
+  resource :kanban, only: [ :show ], controller: "kanban"
+  resources :kanban_colunas, only: [ :create, :update, :destroy ] do
+    member do
+      patch :mover
     end
   end
   resources :presencas, only: [ :index ]

@@ -1,0 +1,134 @@
+<% content_for :title, "Kanban · radar de vagas" %>
+
+<%= render "shared/header", subtitle: "#{@vagas_por_coluna.values.sum(&:size)} vagas em andamento · #{@colunas.size} colunas" %>
+
+<% editavel = !modo_jobsync? %>
+
+<% unless editavel %>
+  <div class="banner warn">
+    <p><strong>somente leitura</strong> — o JobSync está configurado, então as candidaturas são gerenciadas por lá. Aqui só aparecem as vagas enviadas e o que já estava no Kanban.</p>
+  </div>
+<% end %>
+
+<div class="board" data-controller="kanban">
+  <% if modo_jobsync? %>
+    <div class="col">
+      <div class="col-head">
+        <div class="col-head-title"><span class="prompt">&gt;</span> No JobSync</div>
+        <span class="col-count"><%= @vagas_jobsync.size %></span>
+      </div>
+      <div class="col-body">
+        <% @vagas_jobsync.each do |vaga| %>
+          <div class="card card-readonly">
+            <div class="card-empresa"><%= vaga.empresa %></div>
+            <div class="card-vaga"><%= link_to vaga.titulo_vaga, vaga.link, target: "_blank", rel: "noopener" %></div>
+            <div class="card-meta">
+              <span class="mono plataforma-<%= vaga.plataforma.downcase %>"><%= vaga.plataforma %></span>
+              <span class="mono">enviada <%= vaga.enviado_em&.strftime("%d/%m") %></span>
+            </div>
+          </div>
+        <% end %>
+        <% if @vagas_jobsync.empty? %>
+          <div class="col-empty">nenhuma vaga enviada</div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% @colunas.each_with_index do |coluna, i| %>
+    <% vagas = @vagas_por_coluna.fetch(coluna.id, []) %>
+    <% next if !editavel && vagas.empty? %>
+    <div class="col <%= "col-encerra" if coluna.encerra %>">
+      <div class="col-head">
+        <div class="col-head-title"><span class="prompt">&gt;</span> <%= coluna.nome %></div>
+        <span class="col-count" id="count-<%= coluna.id %>"><%= vagas.size %></span>
+      </div>
+
+      <% if editavel %>
+        <details class="col-edit">
+          <summary>editar</summary>
+          <%= form_with model: coluna, url: kanban_coluna_path(coluna), method: :patch do |f| %>
+            <%= f.text_field :nome, maxlength: 60, required: true %>
+            <label class="chk"><%= f.check_box :encerra %> encerra o processo</label>
+            <%= f.submit "Salvar", class: "btn" %>
+          <% end %>
+          <div class="col-edit-row">
+            <% if i > 0 %>
+              <%= button_to "← mover", mover_kanban_coluna_path(coluna, direcao: "esquerda"), method: :patch, class: "btn" %>
+            <% end %>
+            <% if i < @colunas.size - 1 %>
+              <%= button_to "mover →", mover_kanban_coluna_path(coluna, direcao: "direita"), method: :patch, class: "btn" %>
+            <% end %>
+          </div>
+          <%= form_with url: kanban_coluna_path(coluna), method: :delete, class: "col-edit-row" do %>
+            <% if vagas.any? %>
+              <%= select_tag :destino_id, options_for_select(@colunas.reject { |c| c == coluna }.map { |c| [ "levar vagas pra #{c.nome}", c.id ] }), required: true %>
+            <% end %>
+            <%= submit_tag "Apagar coluna", class: "btn btn-danger", data: { turbo_confirm: "Apagar a coluna \"#{coluna.nome}\"?" } %>
+          <% end %>
+        </details>
+      <% end %>
+
+      <div class="col-body"
+           data-kanban-target="coluna"
+           data-coluna-id="<%= coluna.id %>"
+           <% if editavel %>data-action="dragover->kanban#dragOver dragleave->kanban#dragLeave drop->kanban#drop"<% end %>>
+        <% vagas.each do |vaga| %>
+          <div class="card <%= "card-descontinuada" if vaga.descontinuada? %> <%= "card-readonly" unless editavel %>"
+               <% if editavel %>
+                 draggable="true"
+                 data-kanban-target="card"
+                 data-vaga-id="<%= vaga.id %>"
+                 data-url="<%= mover_kanban_vaga_path(vaga) %>"
+                 data-action="dragstart->kanban#dragStart dragend->kanban#dragEnd"
+               <% end %>>
+            <div class="card-empresa"><%= vaga.empresa %></div>
+            <div class="card-vaga"><%= link_to vaga.titulo_vaga, vaga.link, target: "_blank", rel: "noopener", draggable: "false" %></div>
+            <% if vaga.descontinuada? %>
+              <span class="badge-status descontinuada" title="sumiu do portal em <%= vaga.descontinuada_em.strftime("%d/%m/%Y") %>">descontinuada</span>
+            <% end %>
+            <div class="card-meta">
+              <span class="mono plataforma-<%= vaga.plataforma.downcase %>"><%= vaga.plataforma %></span>
+              <% if editavel %>
+                <%= form_with url: mover_kanban_vaga_path(vaga), method: :patch do %>
+                  <%= select_tag :kanban_coluna_id, options_for_select(@colunas.map { |c| [ c.nome, c.id ] }, coluna.id), data: { action: "change->kanban#mudarColuna" }, aria: { label: "Mover pra coluna" } %>
+                <% end %>
+              <% end %>
+            </div>
+            <% if vaga.eventos.any? %>
+              <details class="card-historico">
+                <summary>histórico (<%= vaga.eventos.size %>)</summary>
+                <ol>
+                  <% vaga.eventos.each do |evento| %>
+                    <li><span class="mono"><%= evento.created_at.in_time_zone.strftime("%d/%m/%Y %H:%M") %></span> <%= evento.descricao %></li>
+                  <% end %>
+                </ol>
+              </details>
+            <% end %>
+          </div>
+        <% end %>
+
+        <% if vagas.empty? %>
+          <div class="col-empty"><%= editavel ? "arraste vagas pra cá" : "vazia" %></div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if editavel %>
+    <div class="col col-nova">
+      <div class="col-head">
+        <div class="col-head-title"><span class="prompt">+</span> nova coluna</div>
+      </div>
+      <%= form_with model: KanbanColuna.new, url: kanban_colunas_path, class: "col-nova-form" do |f| %>
+        <%= f.text_field :nome, placeholder: "ex.: Teste prático", maxlength: 60, required: true %>
+        <label class="chk"><%= f.check_box :encerra %> encerra o processo</label>
+        <%= f.submit "Criar coluna", class: "submit-btn" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<% if editavel && @vagas_por_coluna.empty? %>
+  <p class="kanban-dica">O Kanban está vazio. Na <%= link_to "lista de vagas", vagas_path %>, selecione as vagas em que você se candidatou e clique em <b>Adicionar ao Kanban</b>.</p>
+<% end %>

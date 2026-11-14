@@ -9,7 +9,7 @@
   <%= select_tag :plataforma, options_for_select([["Todas as plataformas", ""]] + @plataformas, params[:plataforma]) %>
   <%= select_tag :sort, options_for_select([["Mais recentes", "detectado_em"], ["Publicado", "publicado"]], @sort) %>
   <%= select_tag :na_lista, options_for_select([["Todas", ""], ["Na lista: Sim", "Sim"], ["Na lista: Não", "Não"]], params[:na_lista]) %>
-  <%= select_tag :status, options_for_select([["Todas", ""], ["Detectadas", "detectado"], ["Enviadas", "enviada"], ["Não aplicável", "nao_aplicavel"]], params[:status]) %>
+  <%= select_tag :status, options_for_select([["Todas", ""], ["Detectadas", "detectado"], ["Enviadas", "enviada"], ["No Kanban", "no_kanban"], ["Não aplicável", "nao_aplicavel"]], params[:status]) %>
 
   <label class="chk"><%= check_box_tag :alerta, "1", params[:alerta] == "1" %> só com alerta</label>
 
@@ -17,7 +17,7 @@
   <%= link_to "Limpar filtros", vagas_path, class: "clear-btn" %>
 <% end %>
 
-<%= form_with url: enviar_vagas_path, method: :post, data: { controller: "bulk-select" } do %>
+<%= form_with url: (modo_jobsync? ? enviar_vagas_path : adicionar_kanban_vagas_path), method: :post, data: { controller: "bulk-select" } do %>
   <div class="table-wrap">
     <table>
       <thead>
@@ -52,6 +52,9 @@
             <td>
               <% if vaga.status == "enviada" %>
                 <span class="badge-status enviada" title="<%= vaga.jobsync_job_id %>">enviada <%= vaga.enviado_em&.strftime("%d/%m") %></span>
+              <% elsif vaga.no_kanban? %>
+                <%= link_to kanban_path, class: "badge-status no-kanban" do %><%= vaga.kanban_coluna.nome %><% end %>
+                <% if vaga.descontinuada? %><span class="badge-status descontinuada">descontinuada</span><% end %>
               <% elsif vaga.status == "nao_aplicavel" %>
                 <span class="badge-status nao-aplicavel">não aplicável</span>
               <% else %>
@@ -70,7 +73,11 @@
 
   <div class="bulk-actions">
     <button type="submit" class="btn" data-bulk-select-target="submit" disabled>
-      Enviar <span data-bulk-select-target="count">0</span> vaga(s) pro JobSync
+      <% if modo_jobsync? %>
+        Enviar <span data-bulk-select-target="count">0</span> vaga(s) pro JobSync
+      <% else %>
+        Adicionar <span data-bulk-select-target="count">0</span> vaga(s) ao Kanban
+      <% end %>
     </button>
     <button type="submit" formaction="<%= marcar_nao_aplicavel_vagas_path %>" class="clear-btn" data-bulk-select-target="submit" disabled>
       Marcar como não aplicável
