@@ -11,7 +11,11 @@
       <div class="stat"><b><%= stats[:total] %></b><span>vagas</span></div>
       <div class="stat"><b><%= stats[:na_lista] %></b><span>na lista</span></div>
       <div class="stat"><b><%= stats[:empresas] %></b><span>empresas</span></div>
-      <div class="stat"><b><%= stats[:enviadas] %></b><span>enviadas</span></div>
+      <% if modo_jobsync? %>
+        <div class="stat"><b><%= stats[:enviadas] %></b><span>enviadas</span></div>
+      <% else %>
+        <div class="stat"><b><%= stats[:no_kanban] %></b><span>no kanban</span></div>
+      <% end %>
     </div>
   <% end %>
 </div>

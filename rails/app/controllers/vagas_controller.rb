@@ -1,4 +1,8 @@
 class VagasController < ApplicationController
+  include KanbanEditavel
+
+  before_action :exigir_kanban_editavel, only: [ :adicionar_kanban, :mover_kanban ]
+
   ORDENACOES = {
     "detectado_em" => "vagas.detectado_em DESC, vagas.id ASC",
     "publicado" => "vagas.publicado DESC, vagas.id ASC"
@@ -10,7 +14,7 @@ class VagasController < ApplicationController
     @sort = ORDENACOES.key?(params[:sort]) ? params[:sort] : "detectado_em"
     @stats = Vaga.stats_gerais
 
-    scope = Vaga.order(Arel.sql(ORDENACOES.fetch(@sort)))
+    scope = Vaga.includes(:kanban_coluna).order(Arel.sql(ORDENACOES.fetch(@sort)))
     scope = scope.buscar(params[:q]) if params[:q].present?
     scope = scope.where(plataforma: params[:plataforma]) if params[:plataforma].present?
     scope = scope.where(na_lista: params[:na_lista]) if params[:na_lista].present?
@@ -44,6 +48,37 @@ class VagasController < ApplicationController
     end
   rescue JobSyncClient::Erro => e
     redirect_to vagas_path, alert: "JobSync não configurado: #{e.message}"
+  end
+
+  def adicionar_kanban
+    coluna = KanbanColuna.primeira
+    return redirect_to(kanban_path, alert: "Crie ao menos uma coluna no Kanban antes de adicionar vagas.") unless coluna
+
+    vagas = Vaga.where(id: Array(params[:vaga_ids]), status: "detectado", kanban_coluna_id: nil)
+    total = 0
+    vagas.find_each do |vaga|
+      vaga.adicionar_ao_kanban!(coluna)
+      total += 1
+    end
+
+    if total.zero?
+      redirect_to vagas_path, alert: "Nenhuma vaga selecionada."
+    else
+      redirect_to vagas_path, notice: "#{total} vaga(s) adicionada(s) ao Kanban em \"#{coluna.nome}\"."
+    end
+  end
+
+  # Chamado pelo drag-and-drop do Kanban (JSON) e pelo <select> do card (HTML,
+  # funciona sem JS).
+  def mover_kanban
+    vaga = Vaga.no_kanban.find(params[:id])
+    coluna = KanbanColuna.find(params[:kanban_coluna_id])
+    vaga.mover_para!(coluna)
+
+    respond_to do |format|
+      format.html { redirect_to kanban_path }
+      format.json { head :no_content }
+    end
   end
 
   def marcar_nao_aplicavel

@@ -2,6 +2,19 @@
 
 Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
+## [0.4.0] - 2026-11-14
+
+### Adicionado
+- Kanban interno pra gerenciar as candidaturas sem depender do JobSync (#48). Sem `JOBSYNC_URL`/`JOBSYNC_TOKEN`, o botão da lista de vagas vira "Adicionar ao Kanban" e a vaga entra na primeira coluna. Colunas padrão (Aplicado, Entrevista, Entrevista técnica, Proposta, Aceito, Rejeitado, Desistiu) criadas na migration/seed e editáveis na tela: criar, renomear, reordenar, marcar como "encerra o processo" e apagar (coluna com vagas pede pra onde levá-las). Cards movidos por drag-and-drop ou pelo seletor do card (funciona sem JS).
+- Histórico por vaga (`vaga_eventos`): adicionada, mudou de coluna, descontinuada, reativada — guarda o nome das colunas, então a linha do tempo sobrevive a renomear/apagar coluna.
+- Vaga do Kanban que some do resultado do scraper ganha o selo "descontinuada" no import e continua na coluna onde estava; se voltar a aparecer, perde o selo. Só vale pra plataformas com vagas na rodada (plataforma que veio vazia não descontinua nada) e não se aplica a colunas que encerram o processo.
+
+### Corrigido
+- Instalação nova ficava sem termos de busca e sem empresas-alvo: os dados iniciais eram inseridos dentro das migrations, mas o `db:prepare` de um banco vazio carrega o `schema.rb` e roda só o `db/seeds.rb` (que estava vazio). Carga inicial movida pro `seeds.rb` (`DadosIniciais`, idempotente: termos, empresas e colunas do Kanban). A migration `RepararDadosIniciais` corrige quem já instalou do zero: semeia termos e empresas só se não houver nenhum preset de termos (sinal de que a carga nunca rodou), sem repovoar lista de empresas esvaziada de propósito.
+
+### Alterado
+- Com JobSync configurado, o Kanban fica somente leitura (bloqueado também no servidor): mostra as vagas enviadas numa coluna "No JobSync" e o que já estava no Kanban interno.
+
 ## [0.3.3] - 2026-11-12
 
 ### Corrigido

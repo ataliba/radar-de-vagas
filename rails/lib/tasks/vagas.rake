@@ -6,8 +6,10 @@ namespace :vagas do
     )
 
     vagas_criadas = vagas_atualizadas = 0
+    ids_vistos = []
+    itens = ler_json(source_dir, "vagas_final.json")
 
-    ler_json(source_dir, "vagas_final.json").each do |item|
+    itens.each do |item|
       # Gupy/InHire têm link estável — dedup por ele. Sólides embute no link
       # um slug derivado do título (cosmético, só pra rota abrir), que muda
       # se a empresa editar o título; dedup por id_externo (o id puro da
@@ -36,8 +38,11 @@ namespace :vagas do
       )
 
       vaga.save!
+      ids_vistos << vaga.id
       novo ? vagas_criadas += 1 : vagas_atualizadas += 1
     end
+
+    descontinuadas, reativadas = sincronizar_descontinuadas(ids_vistos, itens.map { |i| i["plataforma"] }.uniq)
 
     presencas_upsert = ler_json(source_dir, "presence_combined.json")
       .uniq { |item| item["empresa"] }
@@ -71,7 +76,30 @@ namespace :vagas do
     EmpresaNova.upsert_all(novas_upsert, unique_by: :index_empresa_novas_on_empresa) if novas_upsert.any?
 
     puts "Vagas: #{vagas_criadas} criadas, #{vagas_atualizadas} atualizadas."
+    puts "Kanban: #{descontinuadas} descontinuada(s), #{reativadas} reativada(s)."
     puts "Presenças: #{presencas_upsert.size}. Empresas novas InHire: #{novas_upsert.size}."
+  end
+
+  # Vaga do Kanban que sumiu do resultado do scraper ganha o selo
+  # "descontinuada" (continua na coluna onde estava); se voltar, perde o selo.
+  #
+  # Só olha plataformas com ao menos uma vaga no resultado desta rodada: se uma
+  # plataforma veio vazia (arquivo ausente, coleta que nunca rodou), não dá pra
+  # afirmar que as vagas dela fecharam. Plataforma que falhou numa rodada fica
+  # com o JSON da última coleta boa (ver rodar_tudo.js), então as vagas dela
+  # continuam aparecendo e não são marcadas por engano.
+  #
+  # Colunas que encerram o processo (Aceito, Rejeitado...) ficam de fora: lá
+  # tanto faz se o anúncio saiu do ar.
+  def sincronizar_descontinuadas(ids_vistos, plataformas_presentes)
+    candidatas = Vaga.no_kanban.joins(:kanban_coluna).where(kanban_colunas: { encerra: false })
+
+    sumiram = candidatas.where(plataforma: plataformas_presentes, descontinuada_em: nil).where.not(id: ids_vistos)
+    voltaram = Vaga.no_kanban.where(id: ids_vistos).where.not(descontinuada_em: nil)
+
+    descontinuadas = sumiram.to_a.each(&:marcar_descontinuada!).size
+    reativadas = voltaram.to_a.each(&:reativar!).size
+    [ descontinuadas, reativadas ]
   end
 
   def ler_json(dir, filename)

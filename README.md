@@ -7,6 +7,10 @@ Radar de vagas remotas DevOps/SRE/Cloud/Infra em três plataformas (Gupy, InHire
 com dashboard próprio pra acompanhar o que é novo, o que já foi enviado e onde as empresas
 da sua lista têm página de carreiras.
 
+Pra acompanhar as candidaturas, use o **Kanban interno** (colunas editáveis, histórico por
+vaga, aviso quando o anúncio sai do ar) ou integre com o [JobSync](https://github.com/Gsync/jobsync):
+com `JOBSYNC_URL`/`JOBSYNC_TOKEN` configurados as vagas vão pra lá e o Kanban fica só pra consulta.
+
 Dois projetos, um repo, orquestrados por docker compose na raiz:
 
 | Pasta | O que é |
@@ -49,7 +53,8 @@ sed -i "s/^POSTGRES_PASSWORD=.*/POSTGRES_PASSWORD=$(openssl rand -hex 16)/" .env
 
 Vai expor o dashboard fora da sua máquina? Preencha também `BASIC_AUTH_USER` e
 `BASIC_AUTH_PASSWORD` (vazios = sem login). `JOBSYNC_URL`/`JOBSYNC_TOKEN` são opcionais, só
-pra quem usa o [JobSync](https://github.com/Gsync/jobsync).
+pra quem usa o [JobSync](https://github.com/Gsync/jobsync); sem eles, as candidaturas são
+gerenciadas no Kanban interno.
 
 **3. Suba**
 
@@ -69,7 +74,7 @@ docker compose pull && docker compose up -d   # atualizar pra última versão
 docker compose down                  # parar (dados ficam nos volumes)
 ```
 
-Pra fixar uma versão em vez de `latest`: `TAG=0.3.3 docker compose up -d` (ou `TAG=` no
+Pra fixar uma versão em vez de `latest`: `TAG=0.4.0 docker compose up -d` (ou `TAG=` no
 `.env`). Usa Portainer? Veja o `docker-compose-portainer.yml` na tabela abaixo.
 
 ## Qual docker-compose usar
